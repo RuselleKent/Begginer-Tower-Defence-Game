@@ -1,0 +1,663 @@
+fileFormatVersion: 2
+guid: 291d9cae19ca8b04b92c0e3e746fe4f9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1137127902310835886
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_0
+  - first:
+      213: -8372934210411436536
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_1
+  - first:
+      213: -5834318375044619703
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_2
+  - first:
+      213: 350379304920605800
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_3
+  - first:
+      213: -2724104481847837862
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_4
+  - first:
+      213: -2583649794521027378
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_5
+  - first:
+      213: 968911548367522799
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_6
+  - first:
+      213: -3745362638216058280
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_7
+  - first:
+      213: 2786943035955775907
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_8
+  - first:
+      213: -5351492150724084373
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_9
+  - first:
+      213: 3655035518871345858
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_10
+  - first:
+      213: -1049129933877833113
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_11
+  - first:
+      213: -4289572564307994472
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_12
+  - first:
+      213: 8189120287268483549
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_13
+  - first:
+      213: -4738895879991461762
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_14
+  - first:
+      213: 1254066724712515416
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_15
+  - first:
+      213: 5299768768685199588
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_16
+  - first:
+      213: -7753119005849781594
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_17
+  - first:
+      213: 7773475211006552460
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_18
+  - first:
+      213: 1397353955740174375
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_19
+  - first:
+      213: -1161914950077442074
+    second: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 192
+        width: 75
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 259d396923c1830f0800000000000000
+      internalID: -1137127902310835886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_1
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 172
+        width: 67
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 806e5b482bc5dcb80800000000000000
+      internalID: -8372934210411436536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_2
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 207
+        width: 85
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9426ee47956580fa0800000000000000
+      internalID: -5834318375044619703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_3
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 202
+        width: 29
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 864e0761f1cccd400800000000000000
+      internalID: 350379304920605800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_4
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 203
+        width: 28
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5bf86c1869023ad0800000000000000
+      internalID: -2724104481847837862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_5
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 199
+        width: 92
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecc209d5338052cd0800000000000000
+      internalID: -2583649794521027378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_6
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 89
+        width: 76
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: feb48337be3427d00800000000000000
+      internalID: 968911548367522799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_7
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 113
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85aac1a368cc50cc0800000000000000
+      internalID: -3745362638216058280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_8
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 112
+        width: 60
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a98463ece53da620800000000000000
+      internalID: 2786943035955775907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_9
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 114
+        width: 63
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6dbcc90e3eabb5b0800000000000000
+      internalID: -5351492150724084373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_10
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 118
+        width: 71
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ca13cf607b49b230800000000000000
+      internalID: 3655035518871345858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 12
+        width: 54
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7629bf732edb071f0800000000000000
+      internalID: -1049129933877833113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_12
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 2
+        width: 69
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 898192ada706874c0800000000000000
+      internalID: -4289572564307994472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_13
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 51
+        width: 28
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd13591738995a170800000000000000
+      internalID: 8189120287268483549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_14
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 51
+        width: 27
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e78fb8d0e4f0c3eb0800000000000000
+      internalID: -4738895879991461762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_15
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 32
+        width: 60
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8578023ba07576110800000000000000
+      internalID: 1254066724712515416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_16
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 36
+        width: 74
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e0d031ad9f8c8940800000000000000
+      internalID: 5299768768685199588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_17
+      rect:
+        serializedVersion: 2
+        x: 377
+        y: 24
+        width: 81
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6aa7efa8753676490800000000000000
+      internalID: -7753119005849781594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_18
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 2
+        width: 88
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c89a95ec48ee0eb60800000000000000
+      internalID: 7773475211006552460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_19
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 728416de406646310800000000000000
+      internalID: 1397353955740174375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_20
+      rect:
+        serializedVersion: 2
+        x: 251
+        y: 2
+        width: 66
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e71b6d428c00efe0800000000000000
+      internalID: -1161914950077442074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_0: -1137127902310835886
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_1: -8372934210411436536
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_10: 3655035518871345858
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_11: -1049129933877833113
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_12: -4289572564307994472
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_13: 8189120287268483549
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_14: -4738895879991461762
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_15: 1254066724712515416
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_16: 5299768768685199588
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_17: -7753119005849781594
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_18: 7773475211006552460
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_19: 1397353955740174375
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_2: -5834318375044619703
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_20: -1161914950077442074
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_3: 350379304920605800
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_4: -2724104481847837862
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_5: -2583649794521027378
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_6: 968911548367522799
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_7: -3745362638216058280
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_8: 2786943035955775907
+      minimalist-pixel-art-icon-set-260nw-2707526405-removebg-preview 1_9: -5351492150724084373
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
