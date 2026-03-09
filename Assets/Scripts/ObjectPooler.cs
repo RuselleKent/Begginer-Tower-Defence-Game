@@ -7,12 +7,11 @@ public class ObjectPooler : MonoBehaviour
     [SerializeField] private int poolSize = 5;
     private List<GameObject> _pool;
 
-    void Start()
+    private void Start()
     {
         if (prefab == null)
         {
             Debug.LogError($"ObjectPooler on '{gameObject.name}': Prefab is not assigned! Assign it in the Inspector.");
-            enabled = false;
             return;
         }
 
@@ -38,6 +37,7 @@ public class ObjectPooler : MonoBehaviour
         return obj;
     }
 
+    /// <summary>Returns an inactive pooled object, or creates a new one if none are available.</summary>
     public GameObject GetPooledObject()
     {
         if (_pool == null)
@@ -49,9 +49,7 @@ public class ObjectPooler : MonoBehaviour
         foreach (GameObject obj in _pool)
         {
             if (obj != null && !obj.activeSelf)
-            {
                 return obj;
-            }
         }
 
         return CreateNewObject();

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Level3
   m_EditorClassIdentifier: 
   levelName: Level3
-  wavesToWin: 3
+  wavesToWin: 6
   startingResources: 400
   startingLives: 3

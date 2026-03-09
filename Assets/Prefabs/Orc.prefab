@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2761225713105826862}
   - component: {fileID: 5435559964894385245}
   - component: {fileID: 1367235476697611154}
+  - component: {fileID: -3314320344669221631}
   m_Layer: 0
   m_Name: Orc
   m_TagString: Enemy
@@ -173,6 +174,28 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.6, y: 0.9}
   m_Direction: 0
+--- !u!95 &-3314320344669221631
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3856578756706975724}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1eaab92950548a84d9c5e8e56b432b11, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4019799911958465314
 GameObject:
   m_ObjectHideFlags: 0

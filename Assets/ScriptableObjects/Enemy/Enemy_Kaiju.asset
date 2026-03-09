@@ -15,4 +15,4 @@ MonoBehaviour:
   lives: 10
   damage: 3
   speed: 1
-  resourceReward: 3
+  resourceReward: 10

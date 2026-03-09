@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2761225713105826862}
   - component: {fileID: -5448951867051916821}
   - component: {fileID: 3725979599735193575}
+  - component: {fileID: -1927377405381284377}
   m_Layer: 0
   m_Name: Dragon
   m_TagString: Enemy
@@ -172,6 +173,28 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.4
+--- !u!95 &-1927377405381284377
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3856578756706975724}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 354f921cbe7dd584a89bdc63c6ac0ca7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7972924209681310547
 GameObject:
   m_ObjectHideFlags: 0

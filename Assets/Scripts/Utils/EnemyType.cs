@@ -4,5 +4,6 @@ public enum EnemyType
 {
     Orc,
     Dragon,
-    Kaiju
+    Kaiju,
+    Boss
 }

@@ -24,6 +24,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private ObjectPooler orcPool;
     [SerializeField] private ObjectPooler dragonPool;
     [SerializeField] private ObjectPooler kaijuPool;
+    [SerializeField] private ObjectPooler bossPool;
 
     private Dictionary<EnemyType, ObjectPooler> _poolDictionary;
 
@@ -41,13 +42,15 @@ public class Spawner : MonoBehaviour
     private void Awake()
     {
         _poolDictionary = new Dictionary<EnemyType, ObjectPooler>();
-        
+
         if (orcPool != null)
             _poolDictionary.Add(EnemyType.Orc, orcPool);
         if (dragonPool != null)
             _poolDictionary.Add(EnemyType.Dragon, dragonPool);
         if (kaijuPool != null)
             _poolDictionary.Add(EnemyType.Kaiju, kaijuPool);
+        if (bossPool != null)
+            _poolDictionary.Add(EnemyType.Boss, bossPool);
 
         if (Instance != null && Instance != this)
         {
@@ -80,7 +83,7 @@ public class Spawner : MonoBehaviour
         }
 
         ValidatePoolSetup();
-        
+
         OnWaveChanged?.Invoke(_waveCounter);
     }
 
@@ -92,8 +95,23 @@ public class Spawner : MonoBehaviour
             Debug.LogWarning("Spawner: Dragon Pool is not assigned!");
         if (kaijuPool == null)
             Debug.LogWarning("Spawner: Kaiju Pool is not assigned!");
+
+        // Only warn about boss pool if a boss wave is actually configured
+        bool hasBossWave = false;
+        foreach (WaveData wave in waves)
+        {
+            if (wave != null && wave.enemyType == EnemyType.Boss)
+            {
+                hasBossWave = true;
+                break;
+            }
+        }
+
+        if (hasBossWave && bossPool == null)
+            Debug.LogWarning("Spawner: Boss Pool is not assigned but a Boss wave exists!");
     }
 
+    /// <summary>Starts the game with a countdown before the first wave spawns.</summary>
     public void StartGameWithCountdown(int countdownSeconds = 3)
     {
         StartCoroutine(CountdownCoroutine(countdownSeconds));
@@ -106,12 +124,12 @@ public class Spawner : MonoBehaviour
             OnCountdownTick?.Invoke(i);
             yield return new WaitForSeconds(1f);
         }
-        
+
         OnCountdownComplete?.Invoke();
         _hasStarted = true;
     }
 
-    void Update()
+    private void Update()
     {
         if (!_hasStarted || CurrentWave == null)
             return;
@@ -119,12 +137,12 @@ public class Spawner : MonoBehaviour
         if (_isBetweenWaves)
         {
             _waveCooldown -= Time.deltaTime;
-            
+
             if (_waveCooldown <= 0f)
             {
-                if (LevelManager.Instance != null && 
+                if (LevelManager.Instance != null &&
                     LevelManager.Instance.CurrentLevel != null &&
-                    _waveCounter + 1 >= LevelManager.Instance.CurrentLevel.wavesToWin && 
+                    _waveCounter + 1 >= LevelManager.Instance.CurrentLevel.wavesToWin &&
                     !_isEndlessMode)
                 {
                     OnMissionComplete?.Invoke();
@@ -143,14 +161,14 @@ public class Spawner : MonoBehaviour
         else
         {
             _spawnTimer -= Time.deltaTime;
-            
+
             if (_spawnTimer <= 0 && _spawnCounter < CurrentWave.enemiesPerWave)
             {
                 _spawnTimer = CurrentWave.spawnInterval;
                 SpawnEnemy();
                 _spawnCounter++;
             }
-            else if (_spawnCounter >= CurrentWave.enemiesPerWave && 
+            else if (_spawnCounter >= CurrentWave.enemiesPerWave &&
                      _enemiesRemoved >= CurrentWave.enemiesPerWave)
             {
                 _isBetweenWaves = true;
@@ -175,15 +193,15 @@ public class Spawner : MonoBehaviour
 
         if (pool == null)
         {
-            Debug.LogError($"Spawner: Pool for {CurrentWave.enemyType} is null! Assign it in the Inspector.");
+            Debug.LogError($"Spawner: Pool for {CurrentWave.enemyType} is null!");
             return;
         }
 
         GameObject spawnedObject = pool.GetPooledObject();
-        
+
         if (spawnedObject == null)
         {
-            Debug.LogError($"Spawner: Pool for {CurrentWave.enemyType} returned null object! Check pool size or prefab assignment.");
+            Debug.LogError($"Spawner: Pool for {CurrentWave.enemyType} returned null! Check pool size or prefab.");
             return;
         }
 
@@ -215,6 +233,7 @@ public class Spawner : MonoBehaviour
         _enemiesRemoved++;
     }
 
+    /// <summary>Enables endless mode, preventing mission complete from firing after the last wave.</summary>
     public void EnableEndlessMode()
     {
         _isEndlessMode = true;

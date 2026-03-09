@@ -1,0 +1,1080 @@
+fileFormatVersion: 2
+guid: 7f336fab578c3bb46a067fcdd52613b1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5240317712119220134
+    second: flying dragon_0
+  - first:
+      213: 4696054787245465794
+    second: flying dragon_1
+  - first:
+      213: -815940593719427212
+    second: flying dragon_2
+  - first:
+      213: -4234123009390084039
+    second: flying dragon_3
+  - first:
+      213: 1026781934740942675
+    second: flying dragon_4
+  - first:
+      213: 6153263901407992845
+    second: flying dragon_5
+  - first:
+      213: 4840290377722805251
+    second: flying dragon_6
+  - first:
+      213: 4440848248734305726
+    second: flying dragon_7
+  - first:
+      213: 8614075741922326113
+    second: flying dragon_8
+  - first:
+      213: -1430563251634584865
+    second: flying dragon_9
+  - first:
+      213: 6945660895283775830
+    second: flying dragon_10
+  - first:
+      213: -8698790314380183013
+    second: flying dragon_11
+  - first:
+      213: 1163589931882313545
+    second: flying dragon_12
+  - first:
+      213: -2394886278849978457
+    second: flying dragon_13
+  - first:
+      213: 6589560186747601842
+    second: flying dragon_14
+  - first:
+      213: 2180752709879273174
+    second: flying dragon_15
+  - first:
+      213: -650944798536726265
+    second: flying dragon_16
+  - first:
+      213: 5070153825513708042
+    second: flying dragon_17
+  - first:
+      213: -1442865604370142610
+    second: flying dragon_18
+  - first:
+      213: -5293410109758164988
+    second: flying dragon_19
+  - first:
+      213: 2255121304089838234
+    second: flying dragon_20
+  - first:
+      213: -4033063960717591038
+    second: flying dragon_21
+  - first:
+      213: 6710023448805924023
+    second: flying dragon_22
+  - first:
+      213: -7433556586508532962
+    second: flying dragon_23
+  - first:
+      213: -8363256407493235513
+    second: flying dragon_24
+  - first:
+      213: 1654136080391980768
+    second: flying dragon_25
+  - first:
+      213: 2325994938865454341
+    second: flying dragon_26
+  - first:
+      213: 2045163717651132466
+    second: flying dragon_27
+  - first:
+      213: 1844922107985624460
+    second: flying dragon_28
+  - first:
+      213: 4086444428789154240
+    second: flying dragon_29
+  - first:
+      213: 2931285655289671509
+    second: flying dragon_30
+  - first:
+      213: -7551659155288352831
+    second: flying dragon_31
+  - first:
+      213: -1532085585792117145
+    second: flying dragon_32
+  - first:
+      213: 4017543354977784137
+    second: flying dragon_33
+  - first:
+      213: -1249625231801041939
+    second: flying dragon_34
+  - first:
+      213: 3529597828148336860
+    second: flying dragon_35
+  - first:
+      213: -6216985906890761829
+    second: flying dragon_36
+  - first:
+      213: 8347577796545944227
+    second: flying dragon_37
+  - first:
+      213: -3191098120733670254
+    second: flying dragon_38
+  - first:
+      213: 3800246761623562604
+    second: flying dragon_39
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 400
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: flying dragon_0
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 3273
+        width: 423
+        height: 239
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5832f22ec6a647b0800000000000000
+      internalID: -5240317712119220134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_1
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 3184
+        width: 423
+        height: 332
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c0e98fb2fcbb2140800000000000000
+      internalID: 4696054787245465794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_2
+      rect:
+        serializedVersion: 2
+        x: 903
+        y: 3175
+        width: 425
+        height: 345
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47f38816a523da4f0800000000000000
+      internalID: -815940593719427212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_3
+      rect:
+        serializedVersion: 2
+        x: 1345
+        y: 3175
+        width: 424
+        height: 345
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9300ff96e8f5d35c0800000000000000
+      internalID: -4234123009390084039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_4
+      rect:
+        serializedVersion: 2
+        x: 1788
+        y: 3186
+        width: 423
+        height: 334
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35fa502cabcdf3e00800000000000000
+      internalID: 1026781934740942675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_5
+      rect:
+        serializedVersion: 2
+        x: 2229
+        y: 3282
+        width: 423
+        height: 236
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0c58acbae8c46550800000000000000
+      internalID: 6153263901407992845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_6
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 2648
+        width: 423
+        height: 236
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30cb8ed147a2c2340800000000000000
+      internalID: 4840290377722805251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_7
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 2648
+        width: 421
+        height: 334
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebd493f14ff01ad30800000000000000
+      internalID: 4440848248734305726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_8
+      rect:
+        serializedVersion: 2
+        x: 909
+        y: 2646
+        width: 419
+        height: 401
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 166f6997f385b8770800000000000000
+      internalID: 8614075741922326113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_9
+      rect:
+        serializedVersion: 2
+        x: 1352
+        y: 2643
+        width: 417
+        height: 408
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd2c7955d4e952ce0800000000000000
+      internalID: -1430563251634584865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_10
+      rect:
+        serializedVersion: 2
+        x: 1797
+        y: 2635
+        width: 414
+        height: 421
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65906b9d8c1f36060800000000000000
+      internalID: 6945660895283775830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_11
+      rect:
+        serializedVersion: 2
+        x: 2240
+        y: 2633
+        width: 412
+        height: 423
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1ab2c71c40b74780800000000000000
+      internalID: -8698790314380183013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_12
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 1997
+        width: 423
+        height: 382
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 947f01ac0e6e52010800000000000000
+      internalID: 1163589931882313545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_13
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 2005
+        width: 444
+        height: 246
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7af90b73e97a3ced0800000000000000
+      internalID: -2394886278849978457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_14
+      rect:
+        serializedVersion: 2
+        x: 886
+        y: 2010
+        width: 442
+        height: 239
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b3c52da312d27b50800000000000000
+      internalID: 6589560186747601842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_15
+      rect:
+        serializedVersion: 2
+        x: 1346
+        y: 1921
+        width: 423
+        height: 332
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d613571907934e10800000000000000
+      internalID: 2180752709879273174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_16
+      rect:
+        serializedVersion: 2
+        x: 1786
+        y: 1906
+        width: 425
+        height: 349
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70984d2972167f6f0800000000000000
+      internalID: -650944798536726265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_17
+      rect:
+        serializedVersion: 2
+        x: 2229
+        y: 1906
+        width: 423
+        height: 349
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0a155e9a0ecc5640800000000000000
+      internalID: 5070153825513708042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_18
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 1339
+        width: 424
+        height: 282
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6a63e0a069e9fbe0800000000000000
+      internalID: -1442865604370142610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_19
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 1380
+        width: 423
+        height: 239
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40037650d870a86b0800000000000000
+      internalID: -5293410109758164988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_20
+      rect:
+        serializedVersion: 2
+        x: 905
+        y: 1380
+        width: 423
+        height: 237
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a92c0bfb0eccb4f10800000000000000
+      internalID: 2255121304089838234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_21
+      rect:
+        serializedVersion: 2
+        x: 1348
+        y: 1380
+        width: 421
+        height: 348
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20e7ff022bda708c0800000000000000
+      internalID: -4033063960717591038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_22
+      rect:
+        serializedVersion: 2
+        x: 1790
+        y: 1378
+        width: 421
+        height: 410
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bc5e9486cace1d50800000000000000
+      internalID: 6710023448805924023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_23
+      rect:
+        serializedVersion: 2
+        x: 2235
+        y: 1372
+        width: 417
+        height: 418
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e13c4635ba3b6d890800000000000000
+      internalID: -7433556586508532962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_24
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 736
+        width: 417
+        height: 419
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7cc2bd99b9ebfeb80800000000000000
+      internalID: -8363256407493235513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_25
+      rect:
+        serializedVersion: 2
+        x: 469
+        y: 734
+        width: 416
+        height: 416
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e6cbe9400ca4f610800000000000000
+      internalID: 1654136080391980768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_26
+      rect:
+        serializedVersion: 2
+        x: 912
+        y: 733
+        width: 416
+        height: 417
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50d8e60c218974020800000000000000
+      internalID: 2325994938865454341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_27
+      rect:
+        serializedVersion: 2
+        x: 1345
+        y: 729
+        width: 424
+        height: 376
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 230fc12c091e16c10800000000000000
+      internalID: 2045163717651132466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_28
+      rect:
+        serializedVersion: 2
+        x: 1786
+        y: 729
+        width: 425
+        height: 376
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8d7fb4e1ea7a9910800000000000000
+      internalID: 1844922107985624460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_29
+      rect:
+        serializedVersion: 2
+        x: 2209
+        y: 731
+        width: 443
+        height: 246
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c10a5c9e87f5b830800000000000000
+      internalID: 4086444428789154240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_30
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 100
+        width: 419
+        height: 239
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55f2dbad5c40ea820800000000000000
+      internalID: 2931285655289671509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_31
+      rect:
+        serializedVersion: 2
+        x: 467
+        y: 0
+        width: 418
+        height: 343
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c71638320e133790800000000000000
+      internalID: -7551659155288352831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_32
+      rect:
+        serializedVersion: 2
+        x: 907
+        y: 0
+        width: 421
+        height: 345
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7665d5de640fcbae0800000000000000
+      internalID: -1532085585792117145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_33
+      rect:
+        serializedVersion: 2
+        x: 1346
+        y: 9
+        width: 423
+        height: 338
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9419e2f356e21c730800000000000000
+      internalID: 4017543354977784137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_34
+      rect:
+        serializedVersion: 2
+        x: 1788
+        y: 109
+        width: 423
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: deb3224f87078aee0800000000000000
+      internalID: -1249625231801041939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flying dragon_35
+      rect:
+        serializedVersion: 2
+        x: 2229
+        y: 109
+        width: 423
+        height: 340
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd895ca2686abf030800000000000000
+      internalID: 3529597828148336860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 2f70414890fbd8241ada189de6b17ccd
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      flying dragon_0: -5240317712119220134
+      flying dragon_1: 4696054787245465794
+      flying dragon_10: 6945660895283775830
+      flying dragon_11: -8698790314380183013
+      flying dragon_12: 1163589931882313545
+      flying dragon_13: -2394886278849978457
+      flying dragon_14: 6589560186747601842
+      flying dragon_15: 2180752709879273174
+      flying dragon_16: -650944798536726265
+      flying dragon_17: 5070153825513708042
+      flying dragon_18: -1442865604370142610
+      flying dragon_19: -5293410109758164988
+      flying dragon_2: -815940593719427212
+      flying dragon_20: 2255121304089838234
+      flying dragon_21: -4033063960717591038
+      flying dragon_22: 6710023448805924023
+      flying dragon_23: -7433556586508532962
+      flying dragon_24: -8363256407493235513
+      flying dragon_25: 1654136080391980768
+      flying dragon_26: 2325994938865454341
+      flying dragon_27: 2045163717651132466
+      flying dragon_28: 1844922107985624460
+      flying dragon_29: 4086444428789154240
+      flying dragon_3: -4234123009390084039
+      flying dragon_30: 2931285655289671509
+      flying dragon_31: -7551659155288352831
+      flying dragon_32: -1532085585792117145
+      flying dragon_33: 4017543354977784137
+      flying dragon_34: -1249625231801041939
+      flying dragon_35: 3529597828148336860
+      flying dragon_4: 1026781934740942675
+      flying dragon_5: 6153263901407992845
+      flying dragon_6: 4840290377722805251
+      flying dragon_7: 4440848248734305726
+      flying dragon_8: 8614075741922326113
+      flying dragon_9: -1430563251634584865
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
