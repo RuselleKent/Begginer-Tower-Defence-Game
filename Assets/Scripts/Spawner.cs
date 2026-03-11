@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
@@ -21,13 +20,6 @@ public class Spawner : MonoBehaviour
     private float _spawnCounter;
     private int _enemiesRemoved;
 
-    [SerializeField] private ObjectPooler orcPool;
-    [SerializeField] private ObjectPooler dragonPool;
-    [SerializeField] private ObjectPooler kaijuPool;
-    [SerializeField] private ObjectPooler bossPool;
-
-    private Dictionary<EnemyType, ObjectPooler> _poolDictionary;
-
     private float _timeBetweenWaves = 1f;
     private float _waveCooldown;
     private bool _isBetweenWaves = false;
@@ -41,17 +33,6 @@ public class Spawner : MonoBehaviour
 
     private void Awake()
     {
-        _poolDictionary = new Dictionary<EnemyType, ObjectPooler>();
-
-        if (orcPool != null)
-            _poolDictionary.Add(EnemyType.Orc, orcPool);
-        if (dragonPool != null)
-            _poolDictionary.Add(EnemyType.Dragon, dragonPool);
-        if (kaijuPool != null)
-            _poolDictionary.Add(EnemyType.Kaiju, kaijuPool);
-        if (bossPool != null)
-            _poolDictionary.Add(EnemyType.Boss, bossPool);
-
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -83,32 +64,23 @@ public class Spawner : MonoBehaviour
         }
 
         ValidatePoolSetup();
-
         OnWaveChanged?.Invoke(_waveCounter);
     }
 
     private void ValidatePoolSetup()
     {
-        if (orcPool == null)
-            Debug.LogWarning("Spawner: Orc Pool is not assigned!");
-        if (dragonPool == null)
-            Debug.LogWarning("Spawner: Dragon Pool is not assigned!");
-        if (kaijuPool == null)
-            Debug.LogWarning("Spawner: Kaiju Pool is not assigned!");
-
-        // Only warn about boss pool if a boss wave is actually configured
-        bool hasBossWave = false;
-        foreach (WaveData wave in waves)
+        for (int i = 0; i < waves.Length; i++)
         {
-            if (wave != null && wave.enemyType == EnemyType.Boss)
+            WaveData wave = waves[i];
+            if (wave == null)
             {
-                hasBossWave = true;
-                break;
+                Debug.LogWarning($"Spawner: Wave at index {i} is null!");
+                continue;
             }
-        }
 
-        if (hasBossWave && bossPool == null)
-            Debug.LogWarning("Spawner: Boss Pool is not assigned but a Boss wave exists!");
+            if (wave.enemyPool == null)
+                Debug.LogError($"Spawner: Wave '{wave.name}' has no enemyPool assigned! Enemies will not spawn for this wave.");
+        }
     }
 
     /// <summary>Starts the game with a countdown before the first wave spawns.</summary>
@@ -185,23 +157,17 @@ public class Spawner : MonoBehaviour
             return;
         }
 
-        if (!_poolDictionary.TryGetValue(CurrentWave.enemyType, out var pool))
+        if (CurrentWave.enemyPool == null)
         {
-            Debug.LogError($"Spawner: No pool found for enemy type {CurrentWave.enemyType}");
+            Debug.LogError($"Spawner: Wave '{CurrentWave.name}' has no enemyPool assigned!");
             return;
         }
 
-        if (pool == null)
-        {
-            Debug.LogError($"Spawner: Pool for {CurrentWave.enemyType} is null!");
-            return;
-        }
-
-        GameObject spawnedObject = pool.GetPooledObject();
+        GameObject spawnedObject = CurrentWave.enemyPool.GetPooledObject();
 
         if (spawnedObject == null)
         {
-            Debug.LogError($"Spawner: Pool for {CurrentWave.enemyType} returned null! Check pool size or prefab.");
+            Debug.LogError($"Spawner: Pool for wave '{CurrentWave.name}' returned null! Check pool size or prefab.");
             return;
         }
 
@@ -219,7 +185,7 @@ public class Spawner : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Spawner: Pooled object doesn't have Enemy component!");
+            Debug.LogError($"Spawner: Pooled object from wave '{CurrentWave.name}' doesn't have an Enemy component!");
         }
     }
 
