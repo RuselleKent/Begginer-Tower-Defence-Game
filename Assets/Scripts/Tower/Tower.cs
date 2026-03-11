@@ -62,8 +62,34 @@ public class Tower : MonoBehaviour
 
     private Vector3 GetSpawnPosition()
     {
-        // Use the assigned spawn point if available, otherwise use tower center
         return spawnPoint != null ? spawnPoint.position : transform.position;
+    }
+
+    /// <summary>Returns the enemy that is furthest along the path — highest waypoint index, then shortest distance to the next waypoint.</summary>
+    private Enemy GetPriorityTarget()
+    {
+        Enemy target = null;
+        int highestWaypoint = -1;
+        float shortestDistance = float.MaxValue;
+
+        foreach (Enemy enemy in _enemiesInRange)
+        {
+            if (enemy == null || !enemy.gameObject.activeInHierarchy)
+                continue;
+
+            bool isFurtherWaypoint = enemy.WaypointIndex > highestWaypoint;
+            bool isSameWaypointButCloser = enemy.WaypointIndex == highestWaypoint
+                                           && enemy.DistanceToNextWaypoint < shortestDistance;
+
+            if (isFurtherWaypoint || isSameWaypointButCloser)
+            {
+                highestWaypoint = enemy.WaypointIndex;
+                shortestDistance = enemy.DistanceToNextWaypoint;
+                target = enemy;
+            }
+        }
+
+        return target;
     }
 
     private void Shoot()
@@ -73,23 +99,25 @@ public class Tower : MonoBehaviour
 
         _enemiesInRange.RemoveAll(enemy => enemy == null || !enemy.gameObject.activeInHierarchy);
 
-        if (_enemiesInRange.Count > 0)
+        Enemy priorityTarget = GetPriorityTarget();
+
+        if (priorityTarget == null)
+            return;
+
+        GameObject projectile = _projectilePool.GetPooledObject();
+        if (projectile == null)
+            return;
+
+        Vector3 spawnPos = GetSpawnPosition();
+        projectile.transform.position = spawnPos;
+
+        Vector2 direction = (priorityTarget.transform.position - spawnPos).normalized;
+
+        Projectile proj = projectile.GetComponent<Projectile>();
+        if (proj != null)
         {
-            GameObject projectile = _projectilePool.GetPooledObject();
-            if (projectile != null)
-            {
-                Vector3 spawnPos = GetSpawnPosition();
-                projectile.transform.position = spawnPos;
-
-                Vector2 direction = (_enemiesInRange[0].transform.position - spawnPos).normalized;
-
-                Projectile proj = projectile.GetComponent<Projectile>();
-                if (proj != null)
-                {
-                    proj.Shoot(data, direction);
-                    projectile.SetActive(true);
-                }
-            }
+            proj.Shoot(data, direction);
+            projectile.SetActive(true);
         }
     }
 
@@ -121,7 +149,6 @@ public class Tower : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        // Always visible yellow sphere showing spawn point
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(GetSpawnPosition(), 0.12f);
         Gizmos.DrawLine(transform.position, GetSpawnPosition());
@@ -129,16 +156,13 @@ public class Tower : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        // Range circle when selected
         if (data != null)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, data.range);
         }
 
-        // Solid spawn point when selected
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(GetSpawnPosition(), 0.15f);
     }
 }
-// kupal

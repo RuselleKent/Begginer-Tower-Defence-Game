@@ -18,6 +18,10 @@ public class Enemy : MonoBehaviour
     private float _currentSpeed;
     private float _currentReward;
 
+    // Exposed so Tower can determine which enemy is furthest along the path
+    public int WaypointIndex => _currentWaypoint;
+    public float DistanceToNextWaypoint => Vector3.Distance(transform.position, _targetPosition);
+
     [SerializeField] private Transform healthBar;
     private Vector3 _healthBarOriginalScale;
 
@@ -32,22 +36,12 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        GameObject pathObject = GameObject.Find(GameConstants.PATH_OBJECT_NAME);
-        
-        if (pathObject != null)
-        {
-            _currentPath = pathObject.GetComponent<Path>();
-        }
-        else
-        {
-            pathObject = GameObject.FindGameObjectWithTag(GameConstants.TAG_PATH);
-            if (pathObject != null)
-                _currentPath = pathObject.GetComponent<Path>();
-        }
+        // Find any Path component in the scene, regardless of object name or tag
+        _currentPath = FindFirstObjectByType<Path>();
 
         if (_currentPath == null)
         {
-            Debug.LogError($"Enemy: No path found! Make sure there's a GameObject named '{GameConstants.PATH_OBJECT_NAME}' or tagged '{GameConstants.TAG_PATH}' with a Path component.");
+            Debug.LogError("Enemy: No Path component found in the scene! Make sure a Path component exists.");
             enabled = false;
             return;
         }
@@ -79,7 +73,7 @@ public class Enemy : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, _targetPosition, _currentSpeed * Time.deltaTime);
 
         float relativeDistance = (transform.position - _targetPosition).magnitude;
-        
+
         if (relativeDistance < 0.1f)
         {
             if (_currentWaypoint < _currentPath.Waypoints.Length - 1)
@@ -139,7 +133,7 @@ public class Enemy : MonoBehaviour
         _currentReward = data.resourceReward * rewardMultiplier;
         UpdateHealthBar();
     }
-    
+
     public float GetCurrentReward()
     {
         return _currentReward;
