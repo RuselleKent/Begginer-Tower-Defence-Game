@@ -150,7 +150,7 @@ public class UIController : MonoBehaviour
     private void ShowCountdown(int seconds)
     {
         IsCountdownActive = true;
-        
+
         if (countdownPanel != null)
         {
             countdownPanel.SetActive(true);
@@ -162,7 +162,7 @@ public class UIController : MonoBehaviour
     private void HideCountdown()
     {
         IsCountdownActive = false;
-        
+
         if (countdownPanel != null)
         {
             countdownPanel.SetActive(false);
@@ -173,12 +173,12 @@ public class UIController : MonoBehaviour
     {
         if (IsCountdownActive)
             return;
-            
+
         if (platform.HasTower)
         {
             return;
         }
-        
+
         _currentPlatform = platform;
         _selectedTower = null;
         ShowTowerPanel();
@@ -188,7 +188,7 @@ public class UIController : MonoBehaviour
     {
         if (IsCountdownActive)
             return;
-            
+
         _selectedTower = tower;
         _currentPlatform = tower.Platform;
         ShowTowerActionsPanel();
@@ -198,16 +198,16 @@ public class UIController : MonoBehaviour
     {
         if (towerPanel == null)
             return;
-            
+
         if (towerActionsPanel != null && towerActionsPanel.activeSelf)
             HideTowerActionsPanel();
-            
+
         towerPanel.SetActive(true);
         Platform.towerPanelOpen = true;
-        
+
         if (GameManager.Instance != null)
             GameManager.Instance.SetTimeScale(0f);
-            
+
         PopulateTowerCards();
     }
 
@@ -215,12 +215,12 @@ public class UIController : MonoBehaviour
     {
         if (towerPanel != null)
             towerPanel.SetActive(false);
-            
+
         Platform.towerPanelOpen = false;
-        
+
         if (GameManager.Instance != null)
             GameManager.Instance.SetTimeScale(GameManager.Instance.GameSpeed);
-            
+
         _currentPlatform = null;
     }
 
@@ -240,7 +240,7 @@ public class UIController : MonoBehaviour
         {
             if (data == null)
                 continue;
-                
+
             GameObject cardGameObject = Instantiate(towerCardPrefab, cardsContainer);
             TowerCard card = cardGameObject.GetComponent<TowerCard>();
             if (card != null)
@@ -259,7 +259,7 @@ public class UIController : MonoBehaviour
             StartCoroutine(ShowWarningMessage("This platform already has a tower!"));
             return;
         }
-        
+
         if (GameManager.Instance != null && GameManager.Instance.Resources >= towerData.cost)
         {
             GameManager.Instance.SpendResources(towerData.cost);
@@ -283,13 +283,13 @@ public class UIController : MonoBehaviour
 
         towerActionsPanel.SetActive(true);
         Platform.towerPanelOpen = true;
-        
+
         if (GameManager.Instance != null)
             GameManager.Instance.SetTimeScale(0f);
-        
+
         if (towerInfoText != null)
             towerInfoText.text = "Tower Selected";
-        
+
         if (refundValueText != null)
             refundValueText.text = $"Refund: {_selectedTower.RefundValue}";
     }
@@ -298,12 +298,12 @@ public class UIController : MonoBehaviour
     {
         if (towerActionsPanel != null)
             towerActionsPanel.SetActive(false);
-        
+
         Platform.towerPanelOpen = false;
-        
+
         if (GameManager.Instance != null)
             GameManager.Instance.SetTimeScale(GameManager.Instance.GameSpeed);
-            
+
         _selectedTower = null;
         _currentPlatform = null;
     }
@@ -331,16 +331,22 @@ public class UIController : MonoBehaviour
     private void SetGameSpeed(float timeScale)
     {
         HighlightSelectedSpeedButton(timeScale);
-        
-        if (GameManager.Instance != null)
-            GameManager.Instance.SetGameSpeed(timeScale);
+
+        if (GameManager.Instance == null)
+            return;
+
+        // Always persist the chosen speed, but only apply it if not paused.
+        GameManager.Instance.StoreGameSpeed(timeScale);
+
+        if (!_isGamePaused)
+            GameManager.Instance.SetTimeScale(timeScale);
     }
 
     private void UpdateButtonVisual(Button button, bool isSelected)
     {
         if (button == null)
             return;
-            
+
         if (button.image != null)
             button.image.color = isSelected ? selectedButtonColor : normalButtonColor;
 
@@ -362,8 +368,8 @@ public class UIController : MonoBehaviour
     {
         if (IsCountdownActive)
             return;
-            
-        if ((towerPanel != null && towerPanel.activeSelf) || 
+
+        if ((towerPanel != null && towerPanel.activeSelf) ||
             (towerActionsPanel != null && towerActionsPanel.activeSelf))
             return;
 
@@ -371,9 +377,9 @@ public class UIController : MonoBehaviour
         {
             if (pausePanel != null)
                 pausePanel.SetActive(false);
-                
+
             _isGamePaused = false;
-            
+
             if (GameManager.Instance != null)
                 GameManager.Instance.SetTimeScale(GameManager.Instance.GameSpeed);
         }
@@ -381,9 +387,9 @@ public class UIController : MonoBehaviour
         {
             if (pausePanel != null)
                 pausePanel.SetActive(true);
-                
+
             _isGamePaused = true;
-            
+
             if (GameManager.Instance != null)
                 GameManager.Instance.SetTimeScale(0f);
         }
@@ -398,7 +404,7 @@ public class UIController : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
-        
+
         #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
         #endif
@@ -408,7 +414,7 @@ public class UIController : MonoBehaviour
     {
         if (GameManager.Instance != null)
             GameManager.Instance.SetTimeScale(1f);
-            
+
         SceneManager.LoadScene(GameConstants.SCENE_MAIN_MENU);
     }
 
@@ -416,7 +422,7 @@ public class UIController : MonoBehaviour
     {
         if (GameManager.Instance != null)
             GameManager.Instance.SetTimeScale(0f);
-            
+
         if (gameOverPanel != null)
             gameOverPanel.SetActive(true);
     }
@@ -430,7 +436,7 @@ public class UIController : MonoBehaviour
             if (cameraObj != null)
                 mainCamera = cameraObj.GetComponent<Camera>();
         }
-        
+
         Canvas canvas = GetComponent<Canvas>();
         if (canvas != null && mainCamera != null)
             canvas.worldCamera = mainCamera;
@@ -457,7 +463,7 @@ public class UIController : MonoBehaviour
             yield return new WaitForSeconds(3f);
             objectiveText.gameObject.SetActive(false);
         }
-        
+
         if (Spawner.Instance != null)
         {
             Spawner.Instance.StartGameWithCountdown(3);
@@ -467,10 +473,10 @@ public class UIController : MonoBehaviour
     private void ShowMissionComplete()
     {
         UpdateNextLevelButton();
-        
+
         if (missionCompletePanel != null)
             missionCompletePanel.SetActive(true);
-            
+
         if (GameManager.Instance != null)
             GameManager.Instance.SetTimeScale(0f);
     }
@@ -479,10 +485,10 @@ public class UIController : MonoBehaviour
     {
         if (missionCompletePanel != null)
             missionCompletePanel.SetActive(false);
-            
+
         if (GameManager.Instance != null)
             GameManager.Instance.SetTimeScale(GameManager.Instance.GameSpeed);
-            
+
         if (Spawner.Instance != null)
             Spawner.Instance.EnableEndlessMode();
     }
@@ -490,7 +496,7 @@ public class UIController : MonoBehaviour
     private void HideUI()
     {
         HidePanels();
-        
+
         if (waveText != null)
             waveText.gameObject.SetActive(false);
         if (livesText != null)
@@ -541,7 +547,7 @@ public class UIController : MonoBehaviour
             towerActionsPanel.SetActive(false);
         if (countdownPanel != null)
             countdownPanel.SetActive(false);
-            
+
         IsCountdownActive = false;
     }
 
@@ -549,19 +555,19 @@ public class UIController : MonoBehaviour
     {
         if (LevelManager.Instance == null)
             return;
-            
+
         var levelManager = LevelManager.Instance;
         if (levelManager.CurrentLevel == null || levelManager.allLevels == null)
             return;
-            
+
         int currentIndex = Array.IndexOf(levelManager.allLevels, levelManager.CurrentLevel);
         int nextIndex = currentIndex + 1;
-        
+
         if (nextIndex < levelManager.allLevels.Length)
         {
             if (missionCompletePanel != null)
                 missionCompletePanel.SetActive(false);
-                
+
             levelManager.LoadLevel(levelManager.allLevels[nextIndex]);
         }
     }
@@ -570,11 +576,11 @@ public class UIController : MonoBehaviour
     {
         if (nextLevelButton == null || LevelManager.Instance == null)
             return;
-            
+
         var levelManager = LevelManager.Instance;
         if (levelManager.CurrentLevel == null || levelManager.allLevels == null)
             return;
-            
+
         int currentIndex = Array.IndexOf(levelManager.allLevels, levelManager.CurrentLevel);
         nextLevelButton.interactable = currentIndex + 1 < levelManager.allLevels.Length;
     }

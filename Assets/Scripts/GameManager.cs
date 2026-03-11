@@ -77,6 +77,12 @@ public class GameManager : MonoBehaviour
         SetTimeScale(_gameSpeed);
     }
 
+    /// <summary>Stores the desired game speed without affecting Time.timeScale.</summary>
+    public void StoreGameSpeed(float newSpeed)
+    {
+        _gameSpeed = newSpeed;
+    }
+
     public void SpendResources(int amount)
     {
         if (_resources >= amount)
