@@ -15,4 +15,4 @@ MonoBehaviour:
   levelName: Level3
   wavesToWin: 6
   startingResources: 400
-  startingLives: 3
+  startingLives: 10

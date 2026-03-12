@@ -9,11 +9,16 @@ public class ObjectPooler : MonoBehaviour
 
     private void Start()
     {
-        if (prefab == null)
-        {
-            Debug.LogError($"ObjectPooler on '{gameObject.name}': Prefab is not assigned! Assign it in the Inspector.");
-            return;
-        }
+        // Only auto-initialize when set up manually in the Inspector
+        if (prefab != null)
+            Initialize(prefab, poolSize);
+    }
+
+    /// <summary>Initializes the pool with the given prefab and size. Called by Spawner at runtime.</summary>
+    public void Initialize(GameObject enemyPrefab, int size)
+    {
+        prefab = enemyPrefab;
+        poolSize = size;
 
         _pool = new List<GameObject>();
         for (int i = 0; i < poolSize; i++)

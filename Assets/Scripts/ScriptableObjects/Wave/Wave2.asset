@@ -12,6 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8e5b66aa4cc86c429d2712094d81c7d, type: 3}
   m_Name: Wave2
   m_EditorClassIdentifier: 
-  enemyType: 1
+  enemies:
+  - enemyPrefab: {fileID: 3856578756706975724, guid: 3c3f9e0511a311544901e354aecedf0a, type: 3}
+    poolSize: 12
+    spawnWeight: 60
+  - enemyPrefab: {fileID: 3856578756706975724, guid: 4285716f71e397f4a89b7a812aa56d54, type: 3}
+    poolSize: 5
+    spawnWeight: 35
+  - enemyPrefab: {fileID: 3856578756706975724, guid: 2939b6b37f913044c910c97f66b0f1a3, type: 3}
+    poolSize: 2
+    spawnWeight: 5
   spawnInterval: 0.5
   enemiesPerWave: 20
