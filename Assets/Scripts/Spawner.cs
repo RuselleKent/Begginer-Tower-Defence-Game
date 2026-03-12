@@ -30,11 +30,6 @@ public class Spawner : MonoBehaviour
     private bool _isEndlessMode = false;
     private bool _hasStarted = false;
 
-    [Header("Enemy Scaling Per Wave")]
-    [SerializeField] private float healthIncreasePerWave = 0.15f;
-    [SerializeField] private float speedIncreasePerWave = 0.05f;
-    [SerializeField] private float rewardIncreasePerWave = 0.1f;
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -78,7 +73,6 @@ public class Spawner : MonoBehaviour
             if (wave == null)
                 continue;
 
-            // Pool random enemies
             if (wave.enemies != null)
             {
                 foreach (EnemySpawnEntry entry in wave.enemies)
@@ -93,15 +87,14 @@ public class Spawner : MonoBehaviour
                 }
             }
 
-            // Pool final spawn enemies
             if (wave.finalSpawns != null)
             {
-                foreach (GameObject prefab in wave.finalSpawns)
+                foreach (EnemySpawnEntry entry in wave.finalSpawns)
                 {
-                    if (prefab == null)
+                    if (entry == null || entry.enemyPrefab == null)
                         continue;
 
-                    RegisterPool(prefab, 1);
+                    RegisterPool(entry.enemyPrefab, Mathf.Max(entry.poolSize, 1));
                 }
             }
         }
@@ -180,21 +173,18 @@ public class Spawner : MonoBehaviour
             {
                 if (!randomsDone)
                 {
-                    // Spawn a random weighted enemy
                     _spawnTimer = CurrentWave.spawnInterval;
                     SpawnWeightedEnemy();
                     _spawnCounter++;
                 }
                 else if (!finalsDone)
                 {
-                    // Spawn the next guaranteed final enemy
                     _spawnTimer = CurrentWave.spawnInterval;
                     SpawnFinalEnemy(_finalSpawnCounter);
                     _finalSpawnCounter++;
                 }
             }
 
-            // Wave ends only when all enemies are spawned AND removed
             if (randomsDone && finalsDone && _enemiesRemoved >= CurrentWave.TotalEnemies)
             {
                 _isBetweenWaves = true;
@@ -203,8 +193,8 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    /// <summary>Picks a random enemy prefab from the current wave using spawn weights.</summary>
-    private GameObject PickWeightedPrefab(WaveData wave)
+    /// <summary>Picks a random entry from the current wave using spawn weights.</summary>
+    private EnemySpawnEntry PickWeightedEntry(WaveData wave)
     {
         int totalWeight = 0;
         foreach (EnemySpawnEntry entry in wave.enemies)
@@ -226,7 +216,7 @@ public class Spawner : MonoBehaviour
 
             accumulated += entry.spawnWeight;
             if (roll < accumulated)
-                return entry.enemyPrefab;
+                return entry;
         }
 
         return null;
@@ -240,14 +230,14 @@ public class Spawner : MonoBehaviour
             return;
         }
 
-        GameObject prefab = PickWeightedPrefab(CurrentWave);
-        if (prefab == null)
+        EnemySpawnEntry entry = PickWeightedEntry(CurrentWave);
+        if (entry == null)
         {
-            Debug.LogError($"Spawner: Could not pick a valid prefab from wave '{CurrentWave.name}'!");
+            Debug.LogError($"Spawner: Could not pick a valid entry from wave '{CurrentWave.name}'!");
             return;
         }
 
-        SpawnFromPool(prefab);
+        SpawnFromPool(entry);
     }
 
     private void SpawnFinalEnemy(int index)
@@ -255,46 +245,42 @@ public class Spawner : MonoBehaviour
         if (CurrentWave.finalSpawns == null || index >= CurrentWave.finalSpawns.Length)
             return;
 
-        GameObject prefab = CurrentWave.finalSpawns[index];
-        if (prefab == null)
+        EnemySpawnEntry entry = CurrentWave.finalSpawns[index];
+        if (entry == null || entry.enemyPrefab == null)
         {
             Debug.LogError($"Spawner: Final spawn at index {index} in wave '{CurrentWave.name}' is null!");
             return;
         }
 
-        SpawnFromPool(prefab);
+        SpawnFromPool(entry);
     }
 
-    private void SpawnFromPool(GameObject prefab)
+    private void SpawnFromPool(EnemySpawnEntry entry)
     {
-        if (!_pools.TryGetValue(prefab, out ObjectPooler pool))
+        if (!_pools.TryGetValue(entry.enemyPrefab, out ObjectPooler pool))
         {
-            Debug.LogError($"Spawner: No pool found for prefab '{prefab.name}'!");
+            Debug.LogError($"Spawner: No pool found for prefab '{entry.enemyPrefab.name}'!");
             return;
         }
 
         GameObject spawnedObject = pool.GetPooledObject();
         if (spawnedObject == null)
         {
-            Debug.LogError($"Spawner: Pool for '{prefab.name}' returned null!");
+            Debug.LogError($"Spawner: Pool for '{entry.enemyPrefab.name}' returned null!");
             return;
         }
 
         spawnedObject.transform.position = transform.position;
 
-        float healthMultiplier = 1f + (_waveCounter * healthIncreasePerWave);
-        float speedMultiplier = 1f + (_waveCounter * speedIncreasePerWave);
-        float rewardMultiplier = 1f + (_waveCounter * rewardIncreasePerWave);
-
         Enemy enemy = spawnedObject.GetComponent<Enemy>();
         if (enemy != null)
         {
-            enemy.Initialize(healthMultiplier, speedMultiplier, rewardMultiplier);
+            enemy.Initialize(entry.healthMultiplier, entry.speedMultiplier, entry.rewardMultiplier);
             spawnedObject.SetActive(true);
         }
         else
         {
-            Debug.LogError($"Spawner: Prefab '{prefab.name}' is missing an Enemy component!");
+            Debug.LogError($"Spawner: Prefab '{entry.enemyPrefab.name}' is missing an Enemy component!");
         }
     }
 

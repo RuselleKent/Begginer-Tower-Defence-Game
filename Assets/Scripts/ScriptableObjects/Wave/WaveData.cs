@@ -14,6 +14,16 @@ public class EnemySpawnEntry
     [Range(1, 100)]
     [Tooltip("Higher weight = more likely to be picked when spawning")]
     public int spawnWeight = 1;
+
+    [Header("Stat Multipliers")]
+    [Tooltip("Multiplies the base health of this enemy for this wave. 1 = normal, 2 = double HP")]
+    public float healthMultiplier = 1f;
+
+    [Tooltip("Multiplies the base speed of this enemy for this wave. 1 = normal, 1.5 = 50% faster")]
+    public float speedMultiplier = 1f;
+
+    [Tooltip("Multiplies the base resource reward of this enemy for this wave")]
+    public float rewardMultiplier = 1f;
 }
 
 [CreateAssetMenu(fileName = "WaveData", menuName = "Scriptable Objects/WaveData")]
@@ -21,8 +31,8 @@ public class WaveData : ScriptableObject
 {
     public EnemySpawnEntry[] enemies;
 
-    [Tooltip("These enemies always spawn at the end of the wave, in order, after all random enemies are spawned")]
-    public GameObject[] finalSpawns;
+    [Tooltip("These entries always spawn at the end of the wave in order, after all random enemies")]
+    public EnemySpawnEntry[] finalSpawns;
 
     public float spawnInterval;
 
