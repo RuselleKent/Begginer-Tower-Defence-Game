@@ -17,12 +17,22 @@ MonoBehaviour:
     poolSize: 5
     spawnCount: 2
     spawnWeight: 10
+    healthMultiplier: 2
+    speedMultiplier: 1
+    rewardMultiplier: 1
   - enemyPrefab: {fileID: 3856578756706975724, guid: 4285716f71e397f4a89b7a812aa56d54, type: 3}
     poolSize: 10
     spawnCount: 8
     spawnWeight: 40
+    healthMultiplier: 1.8
+    speedMultiplier: 1.3
+    rewardMultiplier: 1
   - enemyPrefab: {fileID: 3856578756706975724, guid: 2939b6b37f913044c910c97f66b0f1a3, type: 3}
     poolSize: 12
     spawnCount: 12
     spawnWeight: 50
+    healthMultiplier: 1.8
+    speedMultiplier: 1.3
+    rewardMultiplier: 1
+  finalSpawns: []
   spawnInterval: 0.8
