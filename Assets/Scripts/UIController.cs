@@ -36,6 +36,10 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject countdownPanel;
     [SerializeField] private TMP_Text countdownText;
 
+    [Header("Boss Warning")]
+    [SerializeField] private GameObject bossWarningPanel;
+    [SerializeField] private float bossWarningDuration = 2.5f;
+
     [SerializeField] private Button speed1Button;
     [SerializeField] private Button speed2Button;
     [SerializeField] private Button speed3Button;
@@ -54,6 +58,8 @@ public class UIController : MonoBehaviour
     private bool _isGamePaused = false;
 
     public static bool IsCountdownActive { get; private set; } = false;
+
+    private Coroutine _bossWarningCoroutine;
 
     private void Awake()
     {
@@ -74,6 +80,7 @@ public class UIController : MonoBehaviour
         Spawner.OnCountdownTick += ShowCountdown;
         Spawner.OnCountdownComplete += HideCountdown;
         Spawner.OnMissionComplete += ShowMissionComplete;
+        Spawner.OnBossWarning += ShowBossWarning;
         GameManager.OnLivesChanged += UpdateLivesText;
         GameManager.OnResourcesChanged += UpdateResourcesText;
         Platform.OnPlatformClicked += HandlePlatformClicked;
@@ -88,6 +95,7 @@ public class UIController : MonoBehaviour
         Spawner.OnCountdownTick -= ShowCountdown;
         Spawner.OnCountdownComplete -= HideCountdown;
         Spawner.OnMissionComplete -= ShowMissionComplete;
+        Spawner.OnBossWarning -= ShowBossWarning;
         GameManager.OnLivesChanged -= UpdateLivesText;
         GameManager.OnResourcesChanged -= UpdateResourcesText;
         Platform.OnPlatformClicked -= HandlePlatformClicked;
@@ -159,6 +167,25 @@ public class UIController : MonoBehaviour
 
         if (countdownPanel != null)
             countdownPanel.SetActive(false);
+    }
+
+    private void ShowBossWarning()
+    {
+        if (bossWarningPanel == null)
+            return;
+
+        if (_bossWarningCoroutine != null)
+            StopCoroutine(_bossWarningCoroutine);
+
+        _bossWarningCoroutine = StartCoroutine(BossWarningCoroutine());
+    }
+
+    private IEnumerator BossWarningCoroutine()
+    {
+        bossWarningPanel.SetActive(true);
+        yield return new WaitForSecondsRealtime(bossWarningDuration);
+        bossWarningPanel.SetActive(false);
+        _bossWarningCoroutine = null;
     }
 
     private void HandlePlatformClicked(Platform platform)
@@ -485,6 +512,13 @@ public class UIController : MonoBehaviour
         if (missionCompletePanel != null) missionCompletePanel.SetActive(false);
         if (towerActionsPanel != null) towerActionsPanel.SetActive(false);
         if (countdownPanel != null) countdownPanel.SetActive(false);
+        if (bossWarningPanel != null) bossWarningPanel.SetActive(false);
+
+        if (_bossWarningCoroutine != null)
+        {
+            StopCoroutine(_bossWarningCoroutine);
+            _bossWarningCoroutine = null;
+        }
 
         IsCountdownActive = false;
         _isGamePaused = false;

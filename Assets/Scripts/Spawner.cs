@@ -11,6 +11,7 @@ public class Spawner : MonoBehaviour
     public static event Action OnMissionComplete;
     public static event Action<int> OnCountdownTick;
     public static event Action OnCountdownComplete;
+    public static event Action OnBossWarning;
 
     [SerializeField] private WaveData[] waves;
     private int _currentWaveIndex = 0;
@@ -29,6 +30,7 @@ public class Spawner : MonoBehaviour
     private bool _isBetweenWaves = false;
     private bool _isEndlessMode = false;
     private bool _hasStarted = false;
+    private bool _bossWarningFired = false;
 
     private void Awake()
     {
@@ -160,6 +162,7 @@ public class Spawner : MonoBehaviour
                 _enemiesRemoved = 0;
                 _spawnTimer = 0f;
                 _isBetweenWaves = false;
+                _bossWarningFired = false;
             }
         }
         else
@@ -168,6 +171,14 @@ public class Spawner : MonoBehaviour
 
             bool randomsDone = _spawnCounter >= CurrentWave.EnemiesPerWave;
             bool finalsDone = CurrentWave.finalSpawns == null || _finalSpawnCounter >= CurrentWave.finalSpawns.Length;
+
+            // Fire boss warning once, as soon as all regular enemies have been queued
+            // and there are final (boss) spawns remaining this wave
+            if (!_bossWarningFired && randomsDone && !finalsDone)
+            {
+                _bossWarningFired = true;
+                OnBossWarning?.Invoke();
+            }
 
             if (_spawnTimer <= 0)
             {
