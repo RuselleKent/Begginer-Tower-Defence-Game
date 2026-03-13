@@ -35,7 +35,7 @@ MonoBehaviour:
     speedMultiplier: 1.5
     rewardMultiplier: 1
   finalSpawns:
-  - enemyPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 3856578756706975724, guid: 0947961d2da7a6840893af547f33f97a, type: 3}
     poolSize: 10
     spawnCount: 5
     spawnWeight: 1

@@ -86,8 +86,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>Resets lives, resources and game speed to the current level's starting values.</summary>
     public void ResetGameState()
     {
+        if (LevelManager.Instance == null || LevelManager.Instance.CurrentLevel == null)
+        {
+            Debug.LogWarning("GameManager: ResetGameState called but LevelManager or CurrentLevel is null. Skipping.");
+            return;
+        }
+
         _lives = LevelManager.Instance.CurrentLevel.startingLives;
         OnLivesChanged?.Invoke(_lives);
         _resources = LevelManager.Instance.CurrentLevel.startingResources;

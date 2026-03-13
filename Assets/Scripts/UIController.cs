@@ -411,6 +411,9 @@ public class UIController : MonoBehaviour
         else
         {
             ShowUI();
+            // Re-sync speed button visuals with the actual game speed after reset
+            if (GameManager.Instance != null)
+                HighlightSelectedSpeedButton(GameManager.Instance.GameSpeed);
             StartCoroutine(ShowObjectiveAndStartCountdown());
         }
     }
