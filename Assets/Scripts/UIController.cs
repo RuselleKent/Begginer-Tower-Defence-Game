@@ -19,7 +19,6 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject towerPanel;
     [SerializeField] private GameObject towerCardPrefab;
     [SerializeField] private Transform cardsContainer;
-
     [SerializeField] private TowerData[] towers;
     private List<GameObject> activeCards = new List<GameObject>();
 
@@ -31,7 +30,6 @@ public class UIController : MonoBehaviour
     [SerializeField] private Button closeTowerActionsButton;
     [SerializeField] private TMP_Text refundValueText;
     [SerializeField] private TMP_Text towerInfoText;
-
     private TowerManager _selectedTower;
 
     [Header("Countdown")]
@@ -50,10 +48,10 @@ public class UIController : MonoBehaviour
     [SerializeField] private Color selectedTextColor = Color.white;
 
     [SerializeField] private GameObject pausePanel;
-    private bool _isGamePaused = false;
     [SerializeField] private GameObject gameOverPanel;
-    [SerializeField] private TMP_Text objectiveText;
     [SerializeField] private GameObject missionCompletePanel;
+    [SerializeField] private TMP_Text objectiveText;
+    private bool _isGamePaused = false;
 
     public static bool IsCountdownActive { get; private set; } = false;
 
@@ -75,13 +73,13 @@ public class UIController : MonoBehaviour
         Spawner.OnWaveChanged += UpdateWaveText;
         Spawner.OnCountdownTick += ShowCountdown;
         Spawner.OnCountdownComplete += HideCountdown;
+        Spawner.OnMissionComplete += ShowMissionComplete;
         GameManager.OnLivesChanged += UpdateLivesText;
         GameManager.OnResourcesChanged += UpdateResourcesText;
         Platform.OnPlatformClicked += HandlePlatformClicked;
         TowerCard.OnTowerSelected += HandleTowerSelected;
         TowerManager.OnTowerClicked += HandleTowerClicked;
         SceneManager.sceneLoaded += OnSceneLoaded;
-        Spawner.OnMissionComplete += ShowMissionComplete;
     }
 
     private void OnDisable()
@@ -89,13 +87,13 @@ public class UIController : MonoBehaviour
         Spawner.OnWaveChanged -= UpdateWaveText;
         Spawner.OnCountdownTick -= ShowCountdown;
         Spawner.OnCountdownComplete -= HideCountdown;
+        Spawner.OnMissionComplete -= ShowMissionComplete;
         GameManager.OnLivesChanged -= UpdateLivesText;
         GameManager.OnResourcesChanged -= UpdateResourcesText;
         Platform.OnPlatformClicked -= HandlePlatformClicked;
         TowerCard.OnTowerSelected -= HandleTowerSelected;
         TowerManager.OnTowerClicked -= HandleTowerClicked;
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        Spawner.OnMissionComplete -= ShowMissionComplete;
     }
 
     private void Start()
@@ -119,9 +117,7 @@ public class UIController : MonoBehaviour
     private void Update()
     {
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
-        {
             TogglePause();
-        }
     }
 
     private void UpdateWaveText(int currentWave)
@@ -136,9 +132,7 @@ public class UIController : MonoBehaviour
             livesText.text = $"Lives: {currentLives}";
 
         if (currentLives <= 0)
-        {
             ShowGameOver();
-        }
     }
 
     private void UpdateResourcesText(int currentResources)
@@ -164,20 +158,13 @@ public class UIController : MonoBehaviour
         IsCountdownActive = false;
 
         if (countdownPanel != null)
-        {
             countdownPanel.SetActive(false);
-        }
     }
 
     private void HandlePlatformClicked(Platform platform)
     {
-        if (IsCountdownActive)
+        if (IsCountdownActive || platform.HasTower)
             return;
-
-        if (platform.HasTower)
-        {
-            return;
-        }
 
         _currentPlatform = platform;
         _selectedTower = null;
@@ -241,12 +228,12 @@ public class UIController : MonoBehaviour
             if (data == null)
                 continue;
 
-            GameObject cardGameObject = Instantiate(towerCardPrefab, cardsContainer);
-            TowerCard card = cardGameObject.GetComponent<TowerCard>();
+            GameObject cardObject = Instantiate(towerCardPrefab, cardsContainer);
+            TowerCard card = cardObject.GetComponent<TowerCard>();
             if (card != null)
             {
                 card.Initialize(data);
-                activeCards.Add(cardGameObject);
+                activeCards.Add(cardObject);
             }
         }
     }
@@ -335,7 +322,6 @@ public class UIController : MonoBehaviour
         if (GameManager.Instance == null)
             return;
 
-        // Always persist the chosen speed, but only apply it if not paused.
         GameManager.Instance.StoreGameSpeed(timeScale);
 
         if (!_isGamePaused)
@@ -352,9 +338,7 @@ public class UIController : MonoBehaviour
 
         TMP_Text text = button.GetComponentInChildren<TMP_Text>();
         if (text != null)
-        {
             text.color = isSelected ? selectedTextColor : normalTextColor;
-        }
     }
 
     private void HighlightSelectedSpeedButton(float selectedSpeed)
@@ -373,26 +357,13 @@ public class UIController : MonoBehaviour
             (towerActionsPanel != null && towerActionsPanel.activeSelf))
             return;
 
-        if (_isGamePaused)
-        {
-            if (pausePanel != null)
-                pausePanel.SetActive(false);
+        _isGamePaused = !_isGamePaused;
 
-            _isGamePaused = false;
+        if (pausePanel != null)
+            pausePanel.SetActive(_isGamePaused);
 
-            if (GameManager.Instance != null)
-                GameManager.Instance.SetTimeScale(GameManager.Instance.GameSpeed);
-        }
-        else
-        {
-            if (pausePanel != null)
-                pausePanel.SetActive(true);
-
-            _isGamePaused = true;
-
-            if (GameManager.Instance != null)
-                GameManager.Instance.SetTimeScale(0f);
-        }
+        if (GameManager.Instance != null)
+            GameManager.Instance.SetTimeScale(_isGamePaused ? 0f : GameManager.Instance.GameSpeed);
     }
 
     public void RestartLevel()
@@ -429,24 +400,14 @@ public class UIController : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Camera mainCamera = Camera.main;
-        if (mainCamera == null)
-        {
-            GameObject cameraObj = GameObject.FindGameObjectWithTag(GameConstants.TAG_MAIN_CAMERA);
-            if (cameraObj != null)
-                mainCamera = cameraObj.GetComponent<Camera>();
-        }
-
         Canvas canvas = GetComponent<Canvas>();
-        if (canvas != null && mainCamera != null)
-            canvas.worldCamera = mainCamera;
+        if (canvas != null && Camera.main != null)
+            canvas.worldCamera = Camera.main;
 
         HidePanels();
 
         if (scene.name == GameConstants.SCENE_MAIN_MENU)
-        {
             HideUI();
-        }
         else
         {
             ShowUI();
@@ -465,9 +426,7 @@ public class UIController : MonoBehaviour
         }
 
         if (Spawner.Instance != null)
-        {
             Spawner.Instance.StartGameWithCountdown(3);
-        }
     }
 
     private void ShowMissionComplete()
@@ -495,60 +454,37 @@ public class UIController : MonoBehaviour
 
     private void HideUI()
     {
-        HidePanels();
-
-        if (waveText != null)
-            waveText.gameObject.SetActive(false);
-        if (livesText != null)
-            livesText.gameObject.SetActive(false);
-        if (resourcesText != null)
-            resourcesText.gameObject.SetActive(false);
-        if (warningText != null)
-            warningText.gameObject.SetActive(false);
-
-        if (speed1Button != null)
-            speed1Button.gameObject.SetActive(false);
-        if (speed2Button != null)
-            speed2Button.gameObject.SetActive(false);
-        if (speed3Button != null)
-            speed3Button.gameObject.SetActive(false);
-        if (pauseButton != null)
-            pauseButton.gameObject.SetActive(false);
+        if (waveText != null) waveText.gameObject.SetActive(false);
+        if (livesText != null) livesText.gameObject.SetActive(false);
+        if (resourcesText != null) resourcesText.gameObject.SetActive(false);
+        if (warningText != null) warningText.gameObject.SetActive(false);
+        if (speed1Button != null) speed1Button.gameObject.SetActive(false);
+        if (speed2Button != null) speed2Button.gameObject.SetActive(false);
+        if (speed3Button != null) speed3Button.gameObject.SetActive(false);
+        if (pauseButton != null) pauseButton.gameObject.SetActive(false);
     }
 
     private void ShowUI()
     {
-        if (waveText != null)
-            waveText.gameObject.SetActive(true);
-        if (livesText != null)
-            livesText.gameObject.SetActive(true);
-        if (resourcesText != null)
-            resourcesText.gameObject.SetActive(true);
-
-        if (speed1Button != null)
-            speed1Button.gameObject.SetActive(true);
-        if (speed2Button != null)
-            speed2Button.gameObject.SetActive(true);
-        if (speed3Button != null)
-            speed3Button.gameObject.SetActive(true);
-        if (pauseButton != null)
-            pauseButton.gameObject.SetActive(true);
+        if (waveText != null) waveText.gameObject.SetActive(true);
+        if (livesText != null) livesText.gameObject.SetActive(true);
+        if (resourcesText != null) resourcesText.gameObject.SetActive(true);
+        if (speed1Button != null) speed1Button.gameObject.SetActive(true);
+        if (speed2Button != null) speed2Button.gameObject.SetActive(true);
+        if (speed3Button != null) speed3Button.gameObject.SetActive(true);
+        if (pauseButton != null) pauseButton.gameObject.SetActive(true);
     }
 
     private void HidePanels()
     {
-        if (pausePanel != null)
-            pausePanel.SetActive(false);
-        if (gameOverPanel != null)
-            gameOverPanel.SetActive(false);
-        if (missionCompletePanel != null)
-            missionCompletePanel.SetActive(false);
-        if (towerActionsPanel != null)
-            towerActionsPanel.SetActive(false);
-        if (countdownPanel != null)
-            countdownPanel.SetActive(false);
+        if (pausePanel != null) pausePanel.SetActive(false);
+        if (gameOverPanel != null) gameOverPanel.SetActive(false);
+        if (missionCompletePanel != null) missionCompletePanel.SetActive(false);
+        if (towerActionsPanel != null) towerActionsPanel.SetActive(false);
+        if (countdownPanel != null) countdownPanel.SetActive(false);
 
         IsCountdownActive = false;
+        _isGamePaused = false;
     }
 
     public void LoadNextLevel()

@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour
     public static event Action<int> OnLivesChanged;
     public static event Action<int> OnResourcesChanged;
 
-    private int _lives = 5;
-    private int _resources = 175;
+    private int _lives;
+    private int _resources;
     public int Resources => _resources;
 
     private float _gameSpeed = 1f;
@@ -41,12 +41,6 @@ public class GameManager : MonoBehaviour
         Enemy.OnEnemyReachedEnd -= HandleEnemyReachedEnd;
         Enemy.OnEnemyDestroyed -= HandleEnemyDestroyed;
         SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void Start()
-    {
-        OnLivesChanged?.Invoke(_lives);
-        OnResourcesChanged?.Invoke(_resources);
     }
 
     private void HandleEnemyReachedEnd(EnemyData data)
@@ -105,8 +99,6 @@ public class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (LevelManager.Instance != null && LevelManager.Instance.CurrentLevel != null)
-        {
             ResetGameState();
-        }
     }
 }

@@ -11,12 +11,7 @@ public class TowerData : ScriptableObject
     public float damage;
 
     public int cost;
-    public Sprite sprite;
-
-    public GameObject prefab;
-    
-    [Header("Upgrade System")]
-    public TowerData nextUpgrade;
-    public int upgradeCost;
     public int refundValue;
+    public Sprite sprite;
+    public GameObject prefab;
 }
