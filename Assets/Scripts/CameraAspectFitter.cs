@@ -3,7 +3,7 @@ using UnityEngine;
 public class CameraAspectFitter : MonoBehaviour
 {
     private const float TargetAspect = 16f / 9f;
-    private const float DefaultOrthographicSize = 5.5f;
+    private const float DefaultOrthographicSize = 6f;
 
     private Camera _camera;
 
