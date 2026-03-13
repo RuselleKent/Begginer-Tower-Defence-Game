@@ -26,7 +26,7 @@ public class Platform : MonoBehaviour
 
     private void Update()
     {
-        if (Mouse.current == null || Camera.main == null)
+        if (Camera.main == null)
             return;
 
         if (UIController.IsCountdownActive)
@@ -35,30 +35,41 @@ public class Platform : MonoBehaviour
         if (towerPanelOpen || Time.timeScale == 0f)
             return;
 
+        // ─── PC only: Right-click to interact with a placed tower ────────────
+        if (Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame)
+        {
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+                return;
+
+            Vector2 rightClickWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+
+            if (_collider != null && _collider.OverlapPoint(rightClickWorld) && HasTower)
+            {
+                PlacedTower?.HandleClick();
+                return;
+            }
+        }
+
+        // ─── Universal: Left-click (PC) and tap (mobile/WebGL) ───────────────
+        // Pointer.current covers Mouse, Touchscreen, and browser-simulated touch
+        Pointer pointer = Pointer.current;
+
+        if (pointer == null || !pointer.press.wasPressedThisFrame)
+            return;
+
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
             return;
 
-        if (!Mouse.current.leftButton.wasPressedThisFrame && !Mouse.current.rightButton.wasPressedThisFrame)
-            return;
-
-        Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 screenPos = pointer.position.ReadValue();
+        Vector2 worldPoint = Camera.main.ScreenToWorldPoint(screenPos);
 
         if (_collider == null || !_collider.OverlapPoint(worldPoint))
             return;
 
-        if (Mouse.current.rightButton.wasPressedThisFrame && HasTower)
-        {
+        if (HasTower)
             PlacedTower?.HandleClick();
-            return;
-        }
-
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            if (HasTower)
-                PlacedTower?.HandleClick();
-            else
-                OnPlatformClicked?.Invoke(this);
-        }
+        else
+            OnPlatformClicked?.Invoke(this);
     }
 
     /// <summary>Places a tower on this platform using the provided TowerData.</summary>
