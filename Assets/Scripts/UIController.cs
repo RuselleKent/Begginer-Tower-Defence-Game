@@ -36,9 +36,15 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject countdownPanel;
     [SerializeField] private TMP_Text countdownText;
 
+    [Header("Wave Timer")]
+    [SerializeField] private TMP_Text waveTimerText;
+
     [Header("Boss Warning")]
     [SerializeField] private GameObject bossWarningPanel;
     [SerializeField] private float bossWarningDuration = 2.5f;
+
+    [Header("Floating Text")]
+    [SerializeField] private GameObject floatingTextPrefab;
 
     [SerializeField] private Button speed1Button;
     [SerializeField] private Button speed2Button;
@@ -59,7 +65,12 @@ public class UIController : MonoBehaviour
 
     public static bool IsCountdownActive { get; private set; } = false;
 
+    private const float SlowSpeed = 0.5f;
+    private const float NormalSpeed = 1f;
+    private const float FastSpeed = 2f;
+
     private Coroutine _bossWarningCoroutine;
+    private RangeIndicator _rangeIndicator;
 
     private void Awake()
     {
@@ -71,6 +82,7 @@ public class UIController : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            CreateRangeIndicator();
         }
     }
 
@@ -81,8 +93,10 @@ public class UIController : MonoBehaviour
         Spawner.OnCountdownComplete += HideCountdown;
         Spawner.OnMissionComplete += ShowMissionComplete;
         Spawner.OnBossWarning += ShowBossWarning;
+        Spawner.OnNextWaveIn += ShowNextWaveTimer;
         GameManager.OnLivesChanged += UpdateLivesText;
         GameManager.OnResourcesChanged += UpdateResourcesText;
+        GameManager.OnResourcesEarned += SpawnFloatingText;
         Platform.OnPlatformClicked += HandlePlatformClicked;
         TowerCard.OnTowerSelected += HandleTowerSelected;
         TowerManager.OnTowerClicked += HandleTowerClicked;
@@ -96,8 +110,10 @@ public class UIController : MonoBehaviour
         Spawner.OnCountdownComplete -= HideCountdown;
         Spawner.OnMissionComplete -= ShowMissionComplete;
         Spawner.OnBossWarning -= ShowBossWarning;
+        Spawner.OnNextWaveIn -= ShowNextWaveTimer;
         GameManager.OnLivesChanged -= UpdateLivesText;
         GameManager.OnResourcesChanged -= UpdateResourcesText;
+        GameManager.OnResourcesEarned -= SpawnFloatingText;
         Platform.OnPlatformClicked -= HandlePlatformClicked;
         TowerCard.OnTowerSelected -= HandleTowerSelected;
         TowerManager.OnTowerClicked -= HandleTowerClicked;
@@ -107,11 +123,11 @@ public class UIController : MonoBehaviour
     private void Start()
     {
         if (speed1Button != null)
-            speed1Button.onClick.AddListener(() => SetGameSpeed(0.2f));
+            speed1Button.onClick.AddListener(() => SetGameSpeed(SlowSpeed));
         if (speed2Button != null)
-            speed2Button.onClick.AddListener(() => SetGameSpeed(1f));
+            speed2Button.onClick.AddListener(() => SetGameSpeed(NormalSpeed));
         if (speed3Button != null)
-            speed3Button.onClick.AddListener(() => SetGameSpeed(2f));
+            speed3Button.onClick.AddListener(() => SetGameSpeed(FastSpeed));
 
         if (refundButton != null)
             refundButton.onClick.AddListener(RefundTower);
@@ -128,10 +144,64 @@ public class UIController : MonoBehaviour
             TogglePause();
     }
 
+    // ─── Range Indicator ─────────────────────────────────────────────────────
+
+    private void CreateRangeIndicator()
+    {
+        GameObject obj = new GameObject("RangeIndicator");
+        obj.transform.SetParent(transform);
+
+        LineRenderer lr = obj.AddComponent<LineRenderer>();
+        lr.material = new Material(Shader.Find("Sprites/Default"));
+        lr.startColor = new Color(1f, 1f, 0f, 0.5f);
+        lr.endColor = new Color(1f, 1f, 0f, 0.5f);
+        lr.startWidth = 0.07f;
+        lr.endWidth = 0.07f;
+        lr.sortingLayerName = "UI";
+        lr.sortingOrder = 50;
+
+        _rangeIndicator = obj.AddComponent<RangeIndicator>();
+        obj.SetActive(false);
+    }
+
+    // ─── Floating Text ────────────────────────────────────────────────────────
+
+    private void SpawnFloatingText(int amount, Vector3 worldPosition)
+    {
+        if (floatingTextPrefab == null)
+            return;
+
+        GameObject obj = Instantiate(floatingTextPrefab, worldPosition, Quaternion.identity);
+        FloatingText ft = obj.GetComponent<FloatingText>();
+        if (ft != null)
+            ft.Initialize($"+{amount}", Color.yellow);
+    }
+
+    // ─── Wave Timer ───────────────────────────────────────────────────────────
+
+    private void ShowNextWaveTimer(int seconds)
+    {
+        if (waveTimerText == null)
+            return;
+
+        waveTimerText.gameObject.SetActive(true);
+        waveTimerText.text = seconds > 0 ? $"Next wave in {seconds}s..." : "Incoming!";
+    }
+
+    private void HideNextWaveTimer()
+    {
+        if (waveTimerText != null)
+            waveTimerText.gameObject.SetActive(false);
+    }
+
+    // ─── HUD Text ─────────────────────────────────────────────────────────────
+
     private void UpdateWaveText(int currentWave)
     {
         if (waveText != null)
             waveText.text = $"Wave: {currentWave + 1}";
+
+        HideNextWaveTimer();
     }
 
     private void UpdateLivesText(int currentLives)
@@ -148,6 +218,8 @@ public class UIController : MonoBehaviour
         if (resourcesText != null)
             resourcesText.text = $"Resources: {currentResources}";
     }
+
+    // ─── Countdown ────────────────────────────────────────────────────────────
 
     private void ShowCountdown(int seconds)
     {
@@ -169,6 +241,8 @@ public class UIController : MonoBehaviour
             countdownPanel.SetActive(false);
     }
 
+    // ─── Boss Warning ─────────────────────────────────────────────────────────
+
     private void ShowBossWarning()
     {
         if (bossWarningPanel == null)
@@ -187,6 +261,8 @@ public class UIController : MonoBehaviour
         bossWarningPanel.SetActive(false);
         _bossWarningCoroutine = null;
     }
+
+    // ─── Tower Panel ──────────────────────────────────────────────────────────
 
     private void HandlePlatformClicked(Platform platform)
     {
@@ -231,6 +307,7 @@ public class UIController : MonoBehaviour
             towerPanel.SetActive(false);
 
         Platform.towerPanelOpen = false;
+        _rangeIndicator?.Hide();
 
         if (GameManager.Instance != null)
             GameManager.Instance.SetTimeScale(GameManager.Instance.GameSpeed);
@@ -287,6 +364,8 @@ public class UIController : MonoBehaviour
         HideTowerPanel();
     }
 
+    // ─── Tower Actions Panel ──────────────────────────────────────────────────
+
     private void ShowTowerActionsPanel()
     {
         if (towerActionsPanel == null || _selectedTower == null)
@@ -301,11 +380,23 @@ public class UIController : MonoBehaviour
         if (GameManager.Instance != null)
             GameManager.Instance.SetTimeScale(0f);
 
-        if (towerInfoText != null)
-            towerInfoText.text = "Tower Selected";
+        TowerData d = _selectedTower.CurrentData;
+
+        if (towerInfoText != null && d != null)
+        {
+            string name = !string.IsNullOrEmpty(d.displayName) ? d.displayName : d.name;
+            float fireRate = d.shootInterval > 0f ? 1f / d.shootInterval : 0f;
+            towerInfoText.text = $"<b>{name}</b>\n" +
+                     $"DMG: {d.damage}\n" +
+                     $"RNG: {d.range}\n" +
+                     $"SPD: {fireRate:F1}/s";
+        }
 
         if (refundValueText != null)
-            refundValueText.text = $"Refund: {_selectedTower.RefundValue}";
+            refundValueText.text = $"Refund: {_selectedTower.RefundValue}g";
+
+        if (_rangeIndicator != null && d != null)
+            _rangeIndicator.Show(_selectedTower.transform.position, d.range);
     }
 
     public void HideTowerActionsPanel()
@@ -314,6 +405,7 @@ public class UIController : MonoBehaviour
             towerActionsPanel.SetActive(false);
 
         Platform.towerPanelOpen = false;
+        _rangeIndicator?.Hide();
 
         if (GameManager.Instance != null)
             GameManager.Instance.SetTimeScale(GameManager.Instance.GameSpeed);
@@ -341,6 +433,8 @@ public class UIController : MonoBehaviour
             warningText.gameObject.SetActive(false);
         }
     }
+
+    // ─── Speed Buttons ────────────────────────────────────────────────────────
 
     private void SetGameSpeed(float timeScale)
     {
@@ -370,10 +464,12 @@ public class UIController : MonoBehaviour
 
     private void HighlightSelectedSpeedButton(float selectedSpeed)
     {
-        UpdateButtonVisual(speed1Button, Mathf.Approximately(selectedSpeed, 0.2f));
-        UpdateButtonVisual(speed2Button, Mathf.Approximately(selectedSpeed, 1f));
-        UpdateButtonVisual(speed3Button, Mathf.Approximately(selectedSpeed, 2f));
+        UpdateButtonVisual(speed1Button, Mathf.Approximately(selectedSpeed, SlowSpeed));
+        UpdateButtonVisual(speed2Button, Mathf.Approximately(selectedSpeed, NormalSpeed));
+        UpdateButtonVisual(speed3Button, Mathf.Approximately(selectedSpeed, FastSpeed));
     }
+
+    // ─── Pause ────────────────────────────────────────────────────────────────
 
     public void TogglePause()
     {
@@ -393,6 +489,8 @@ public class UIController : MonoBehaviour
             GameManager.Instance.SetTimeScale(_isGamePaused ? 0f : GameManager.Instance.GameSpeed);
     }
 
+    // ─── Scene / Navigation ───────────────────────────────────────────────────
+
     public void RestartLevel()
     {
         if (LevelManager.Instance != null && LevelManager.Instance.CurrentLevel != null)
@@ -402,10 +500,9 @@ public class UIController : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
-
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-        #endif
+#endif
     }
 
     public void GoToMainMenu()
@@ -438,7 +535,6 @@ public class UIController : MonoBehaviour
         else
         {
             ShowUI();
-            // Re-sync speed button visuals with the actual game speed after reset
             if (GameManager.Instance != null)
                 HighlightSelectedSpeedButton(GameManager.Instance.GameSpeed);
             StartCoroutine(ShowObjectiveAndStartCountdown());
@@ -462,6 +558,7 @@ public class UIController : MonoBehaviour
     private void ShowMissionComplete()
     {
         UpdateNextLevelButton();
+        HideNextWaveTimer();
 
         if (missionCompletePanel != null)
             missionCompletePanel.SetActive(true);
@@ -488,6 +585,7 @@ public class UIController : MonoBehaviour
         if (livesText != null) livesText.gameObject.SetActive(false);
         if (resourcesText != null) resourcesText.gameObject.SetActive(false);
         if (warningText != null) warningText.gameObject.SetActive(false);
+        if (waveTimerText != null) waveTimerText.gameObject.SetActive(false);
         if (speed1Button != null) speed1Button.gameObject.SetActive(false);
         if (speed2Button != null) speed2Button.gameObject.SetActive(false);
         if (speed3Button != null) speed3Button.gameObject.SetActive(false);
@@ -513,6 +611,8 @@ public class UIController : MonoBehaviour
         if (towerActionsPanel != null) towerActionsPanel.SetActive(false);
         if (countdownPanel != null) countdownPanel.SetActive(false);
         if (bossWarningPanel != null) bossWarningPanel.SetActive(false);
+
+        _rangeIndicator?.Hide();
 
         if (_bossWarningCoroutine != null)
         {

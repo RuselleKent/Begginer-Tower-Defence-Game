@@ -10,7 +10,6 @@ public class Enemy : MonoBehaviour
     public static event Action<Enemy> OnEnemyDestroyed;
 
     private Path _currentPath;
-
     private Vector3 _targetPosition;
     private int _currentWaypoint;
     private float _lives;
@@ -18,12 +17,13 @@ public class Enemy : MonoBehaviour
     private float _currentSpeed;
     private float _currentReward;
 
-    // Exposed so Tower can determine which enemy is furthest along the path
     public int WaypointIndex => _currentWaypoint;
     public float DistanceToNextWaypoint => Vector3.Distance(transform.position, _targetPosition);
 
+    [SerializeField] private GameObject healthBarRoot;
     [SerializeField] private Transform healthBar;
     private Vector3 _healthBarOriginalScale;
+    private bool _damageTaken;
 
     private bool _hasBeenCounted = false;
 
@@ -31,29 +31,24 @@ public class Enemy : MonoBehaviour
     {
         if (data == null)
         {
-            Debug.LogError($"Enemy '{gameObject.name}': EnemyData is not assigned! Assign it in the Inspector.");
+            Debug.LogError($"Enemy '{gameObject.name}': EnemyData is not assigned!");
             enabled = false;
             return;
         }
 
-        // Find any Path component in the scene, regardless of object name or tag
         _currentPath = FindFirstObjectByType<Path>();
 
         if (_currentPath == null)
         {
-            Debug.LogError("Enemy: No Path component found in the scene! Make sure a Path component exists.");
+            Debug.LogError("Enemy: No Path component found in the scene!");
             enabled = false;
             return;
         }
 
         if (healthBar != null)
-        {
             _healthBarOriginalScale = healthBar.localScale;
-        }
         else
-        {
             Debug.LogWarning($"Enemy '{gameObject.name}': Health bar Transform not assigned.");
-        }
     }
 
     private void OnEnable()
@@ -65,7 +60,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (_hasBeenCounted || _currentPath == null)
             return;
@@ -95,6 +90,13 @@ public class Enemy : MonoBehaviour
         if (_hasBeenCounted)
             return;
 
+        if (!_damageTaken)
+        {
+            _damageTaken = true;
+            if (healthBarRoot != null)
+                healthBarRoot.SetActive(true);
+        }
+
         _lives -= damage;
         _lives = Mathf.Max(_lives, 0);
         UpdateHealthBar();
@@ -118,6 +120,7 @@ public class Enemy : MonoBehaviour
         healthBar.localScale = scale;
     }
 
+    /// <summary>Initializes the enemy stats and resets health bar visibility.</summary>
     public void Initialize(float healthMultiplier, float speedMultiplier, float rewardMultiplier)
     {
         if (data == null)
@@ -127,15 +130,17 @@ public class Enemy : MonoBehaviour
         }
 
         _hasBeenCounted = false;
+        _damageTaken = false;
         _maxLives = data.lives * healthMultiplier;
         _lives = _maxLives;
         _currentSpeed = data.speed * speedMultiplier;
         _currentReward = data.resourceReward * rewardMultiplier;
+
+        if (healthBarRoot != null)
+            healthBarRoot.SetActive(false);
+
         UpdateHealthBar();
     }
 
-    public float GetCurrentReward()
-    {
-        return _currentReward;
-    }
+    public float GetCurrentReward() => _currentReward;
 }

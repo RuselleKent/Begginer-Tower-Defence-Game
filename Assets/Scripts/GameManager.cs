@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     public static event Action<int> OnLivesChanged;
     public static event Action<int> OnResourcesChanged;
+    public static event Action<int, Vector3> OnResourcesEarned;
 
     private int _lives;
     private int _resources;
@@ -51,7 +52,10 @@ public class GameManager : MonoBehaviour
 
     private void HandleEnemyDestroyed(Enemy enemy)
     {
-        AddResources(Mathf.RoundToInt(enemy.GetCurrentReward()));
+        int amount = Mathf.RoundToInt(enemy.GetCurrentReward());
+        Vector3 position = enemy.transform.position;
+        AddResources(amount);
+        OnResourcesEarned?.Invoke(amount, position);
     }
 
     public void AddResources(int amount)

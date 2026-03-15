@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 2f52611c9da78c94a94e3808d4f58978, type: 2}
+  healthBarRoot: {fileID: 7972924209681310547}
   healthBar: {fileID: 7692674510123989661}
 --- !u!212 &2761225713105826862
 SpriteRenderer:

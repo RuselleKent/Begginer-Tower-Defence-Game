@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af746d875b9a08747af33e830b569b1f, type: 3}
   m_Name: FastTower
   m_EditorClassIdentifier: 
+  displayName: Fast Tower
   range: 3.5
   shootInterval: 0.7
   projectileSpeed: 10
@@ -19,8 +20,6 @@ MonoBehaviour:
   projectileSize: 1
   damage: 1
   cost: 50
+  refundValue: 20
   sprite: {fileID: -8481373862827406493, guid: 3724cf133379298499ec1dbb0005be62, type: 3}
   prefab: {fileID: 1838302079820638416, guid: d905ea5805a973340bdf028b4a02f047, type: 3}
-  nextUpgrade: {fileID: 0}
-  upgradeCost: 25
-  refundValue: 20

@@ -12,6 +12,7 @@ public class Spawner : MonoBehaviour
     public static event Action<int> OnCountdownTick;
     public static event Action OnCountdownComplete;
     public static event Action OnBossWarning;
+    public static event Action<int> OnNextWaveIn;
 
     [SerializeField] private WaveData[] waves;
     private int _currentWaveIndex = 0;
@@ -31,6 +32,7 @@ public class Spawner : MonoBehaviour
     private bool _isEndlessMode = false;
     private bool _hasStarted = false;
     private bool _bossWarningFired = false;
+    private int _lastTimerSecond = -1;
 
     private void Awake()
     {
@@ -84,7 +86,6 @@ public class Spawner : MonoBehaviour
                         Debug.LogWarning($"Spawner: Wave '{wave.name}' has an entry with no prefab assigned.");
                         continue;
                     }
-
                     RegisterPool(entry.enemyPrefab, entry.poolSize);
                 }
             }
@@ -95,7 +96,6 @@ public class Spawner : MonoBehaviour
                 {
                     if (entry == null || entry.enemyPrefab == null)
                         continue;
-
                     RegisterPool(entry.enemyPrefab, Mathf.Max(entry.poolSize, 1));
                 }
             }
@@ -143,6 +143,13 @@ public class Spawner : MonoBehaviour
         {
             _waveCooldown -= Time.deltaTime;
 
+            int secondsLeft = Mathf.CeilToInt(_waveCooldown);
+            if (secondsLeft != _lastTimerSecond)
+            {
+                _lastTimerSecond = secondsLeft;
+                OnNextWaveIn?.Invoke(Mathf.Max(0, secondsLeft));
+            }
+
             if (_waveCooldown <= 0f)
             {
                 if (LevelManager.Instance != null &&
@@ -163,6 +170,7 @@ public class Spawner : MonoBehaviour
                 _spawnTimer = 0f;
                 _isBetweenWaves = false;
                 _bossWarningFired = false;
+                _lastTimerSecond = -1;
             }
         }
         else
@@ -172,8 +180,6 @@ public class Spawner : MonoBehaviour
             bool randomsDone = _spawnCounter >= CurrentWave.EnemiesPerWave;
             bool finalsDone = CurrentWave.finalSpawns == null || _finalSpawnCounter >= CurrentWave.finalSpawns.Length;
 
-            // Fire boss warning once, as soon as all regular enemies have been queued
-            // and there are final (boss) spawns remaining this wave
             if (!_bossWarningFired && randomsDone && !finalsDone)
             {
                 _bossWarningFired = true;
@@ -200,11 +206,11 @@ public class Spawner : MonoBehaviour
             {
                 _isBetweenWaves = true;
                 _waveCooldown = _timeBetweenWaves;
+                _lastTimerSecond = -1;
             }
         }
     }
 
-    /// <summary>Picks a random entry from the current wave using spawn weights.</summary>
     private EnemySpawnEntry PickWeightedEntry(WaveData wave)
     {
         int totalWeight = 0;
@@ -295,15 +301,8 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    private void HandleEnemyReachedEnd(EnemyData data)
-    {
-        _enemiesRemoved++;
-    }
-
-    private void HandleEnemyDestroyed(Enemy enemy)
-    {
-        _enemiesRemoved++;
-    }
+    private void HandleEnemyReachedEnd(EnemyData data) => _enemiesRemoved++;
+    private void HandleEnemyDestroyed(Enemy enemy) => _enemiesRemoved++;
 
     /// <summary>Enables endless mode, preventing mission complete from firing after the last wave.</summary>
     public void EnableEndlessMode()
