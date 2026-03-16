@@ -147,7 +147,15 @@ public class Spawner : MonoBehaviour
             if (secondsLeft != _lastTimerSecond)
             {
                 _lastTimerSecond = secondsLeft;
-                OnNextWaveIn?.Invoke(Mathf.Max(0, secondsLeft));
+
+                // Don't fire the wave timer on the last wave — it goes straight to mission complete
+                bool isLastWave = LevelManager.Instance != null &&
+                                  LevelManager.Instance.CurrentLevel != null &&
+                                  _waveCounter + 1 >= LevelManager.Instance.CurrentLevel.wavesToWin &&
+                                  !_isEndlessMode;
+
+                if (!isLastWave)
+                    OnNextWaveIn?.Invoke(Mathf.Max(0, secondsLeft));
             }
 
             if (_waveCooldown <= 0f)

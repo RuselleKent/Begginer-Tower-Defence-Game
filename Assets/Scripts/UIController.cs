@@ -184,6 +184,10 @@ public class UIController : MonoBehaviour
         if (waveTimerText == null)
             return;
 
+        // Suppress wave timer while boss warning is on screen
+        if (bossWarningPanel != null && bossWarningPanel.activeSelf)
+            return;
+
         waveTimerText.gameObject.SetActive(true);
         waveTimerText.text = seconds > 0 ? $"Next wave in {seconds}s..." : "Incoming!";
     }
@@ -251,6 +255,7 @@ public class UIController : MonoBehaviour
         if (_bossWarningCoroutine != null)
             StopCoroutine(_bossWarningCoroutine);
 
+        HideNextWaveTimer();
         _bossWarningCoroutine = StartCoroutine(BossWarningCoroutine());
     }
 
@@ -384,12 +389,12 @@ public class UIController : MonoBehaviour
 
         if (towerInfoText != null && d != null)
         {
-            string name = !string.IsNullOrEmpty(d.displayName) ? d.displayName : d.name;
+            string displayName = !string.IsNullOrEmpty(d.displayName) ? d.displayName : d.name;
             float fireRate = d.shootInterval > 0f ? 1f / d.shootInterval : 0f;
-            towerInfoText.text = $"<b>{name}</b>\n" +
-                     $"DMG: {d.damage}\n" +
-                     $"RNG: {d.range}\n" +
-                     $"SPD: {fireRate:F1}/s";
+            towerInfoText.text = $"<b>{displayName}</b>\n" +
+                                 $"DMG: {d.damage}\n" +
+                                 $"RNG: {d.range}\n" +
+                                 $"SPD: {fireRate:F1}/s";
         }
 
         if (refundValueText != null)
