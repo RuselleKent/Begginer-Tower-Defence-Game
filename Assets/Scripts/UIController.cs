@@ -595,6 +595,8 @@ public class UIController : MonoBehaviour
         if (speed2Button != null) speed2Button.gameObject.SetActive(false);
         if (speed3Button != null) speed3Button.gameObject.SetActive(false);
         if (pauseButton != null) pauseButton.gameObject.SetActive(false);
+        if (objectiveText != null) objectiveText.gameObject.SetActive(false);
+
     }
 
     private void ShowUI()

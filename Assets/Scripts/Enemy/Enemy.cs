@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour
     public int WaypointIndex => _currentWaypoint;
     public float DistanceToNextWaypoint => Vector3.Distance(transform.position, _targetPosition);
 
+    [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private GameObject healthBarRoot;
     [SerializeField] private Transform healthBar;
     private Vector3 _healthBarOriginalScale;
@@ -65,7 +66,9 @@ public class Enemy : MonoBehaviour
         if (_hasBeenCounted || _currentPath == null)
             return;
 
+        Vector3 moveDirection = (_targetPosition - transform.position).normalized;
         transform.position = Vector3.MoveTowards(transform.position, _targetPosition, _currentSpeed * Time.deltaTime);
+        UpdateFacingDirection(moveDirection);
 
         float relativeDistance = (transform.position - _targetPosition).magnitude;
 
@@ -118,6 +121,18 @@ public class Enemy : MonoBehaviour
         Vector3 scale = _healthBarOriginalScale;
         scale.x = _healthBarOriginalScale.x * healthPercent;
         healthBar.localScale = scale;
+    }
+
+    /// <summary>Flips the sprite horizontally based on horizontal movement direction.</summary>
+    private void UpdateFacingDirection(Vector3 moveDirection)
+    {
+        if (spriteRenderer == null)
+            return;
+
+        if (moveDirection.x < 0f)
+            spriteRenderer.flipX = true;
+        else if (moveDirection.x > 0f)
+            spriteRenderer.flipX = false;
     }
 
     /// <summary>Initializes the enemy stats and resets health bar visibility.</summary>
