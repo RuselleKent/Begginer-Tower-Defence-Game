@@ -10,7 +10,7 @@ public class Tower : MonoBehaviour
     [Tooltip("Drag the SpawnPoint child object here to control where projectiles come from")]
     [SerializeField] private Transform spawnPoint;
 
-    private List<Enemy> _enemiesInRange = new List<Enemy>();
+    private readonly List<Enemy> _enemiesInRange = new List<Enemy>();
     private ObjectPooler _projectilePool;
     private float _shootTimer;
 
@@ -48,12 +48,12 @@ public class Tower : MonoBehaviour
 
     private void Update()
     {
-        if (data == null)
+        if (data == null || _enemiesInRange.Count == 0)
             return;
 
         _shootTimer -= Time.deltaTime;
 
-        if (_shootTimer <= 0)
+        if (_shootTimer <= 0f)
         {
             _shootTimer = data.shootInterval;
             Shoot();
@@ -65,12 +65,16 @@ public class Tower : MonoBehaviour
         return spawnPoint != null ? spawnPoint.position : transform.position;
     }
 
-    /// <summary>Returns the enemy that is furthest along the path — highest waypoint index, then shortest distance to the next waypoint.</summary>
+    /// <summary>
+    /// Returns the enemy furthest along the path — highest waypoint index,
+    /// then shortest sqr distance to the next waypoint.
+    /// Uses sqrMagnitude to avoid a Sqrt call per enemy per shot.
+    /// </summary>
     private Enemy GetPriorityTarget()
     {
         Enemy target = null;
         int highestWaypoint = -1;
-        float shortestDistance = float.MaxValue;
+        float shortestSqrDistance = float.MaxValue;
 
         foreach (Enemy enemy in _enemiesInRange)
         {
@@ -79,12 +83,12 @@ public class Tower : MonoBehaviour
 
             bool isFurtherWaypoint = enemy.WaypointIndex > highestWaypoint;
             bool isSameWaypointButCloser = enemy.WaypointIndex == highestWaypoint
-                                           && enemy.DistanceToNextWaypoint < shortestDistance;
+                                           && enemy.SqrDistanceToNextWaypoint < shortestSqrDistance;
 
             if (isFurtherWaypoint || isSameWaypointButCloser)
             {
                 highestWaypoint = enemy.WaypointIndex;
-                shortestDistance = enemy.DistanceToNextWaypoint;
+                shortestSqrDistance = enemy.SqrDistanceToNextWaypoint;
                 target = enemy;
             }
         }
@@ -94,13 +98,12 @@ public class Tower : MonoBehaviour
 
     private void Shoot()
     {
-        if (_projectilePool == null || _enemiesInRange == null || _enemiesInRange.Count == 0)
+        if (_projectilePool == null || _enemiesInRange.Count == 0)
             return;
 
-        _enemiesInRange.RemoveAll(enemy => enemy == null || !enemy.gameObject.activeInHierarchy);
+        CleanEnemiesInRange();
 
         Enemy priorityTarget = GetPriorityTarget();
-
         if (priorityTarget == null)
             return;
 
@@ -118,6 +121,16 @@ public class Tower : MonoBehaviour
         {
             proj.Shoot(data, direction);
             projectile.SetActive(true);
+        }
+    }
+
+    /// <summary>Removes null or inactive enemies without a lambda allocation.</summary>
+    private void CleanEnemiesInRange()
+    {
+        for (int i = _enemiesInRange.Count - 1; i >= 0; i--)
+        {
+            if (_enemiesInRange[i] == null || !_enemiesInRange[i].gameObject.activeInHierarchy)
+                _enemiesInRange.RemoveAt(i);
         }
     }
 
@@ -143,8 +156,7 @@ public class Tower : MonoBehaviour
 
     private void HandleEnemyDestroyed(Enemy enemy)
     {
-        if (_enemiesInRange != null)
-            _enemiesInRange.Remove(enemy);
+        _enemiesInRange.Remove(enemy);
     }
 
     private void OnDrawGizmos()

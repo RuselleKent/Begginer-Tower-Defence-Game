@@ -15,8 +15,8 @@ public class Spawner : MonoBehaviour
     public static event Action<int> OnNextWaveIn;
 
     [SerializeField] private WaveData[] waves;
-    private int _currentWaveIndex = 0;
-    private int _waveCounter = 0;
+    private int _currentWaveIndex;
+    private int _waveCounter;
     private WaveData CurrentWave => waves != null && waves.Length > 0 ? waves[_currentWaveIndex] : null;
 
     private Dictionary<GameObject, ObjectPooler> _pools = new Dictionary<GameObject, ObjectPooler>();
@@ -26,12 +26,12 @@ public class Spawner : MonoBehaviour
     private int _finalSpawnCounter;
     private int _enemiesRemoved;
 
-    private float _timeBetweenWaves = 1f;
+    private const float TimeBetweenWaves = 1f;
     private float _waveCooldown;
-    private bool _isBetweenWaves = false;
-    private bool _isEndlessMode = false;
-    private bool _hasStarted = false;
-    private bool _bossWarningFired = false;
+    private bool _isBetweenWaves;
+    private bool _isEndlessMode;
+    private bool _hasStarted;
+    private bool _bossWarningFired;
     private int _lastTimerSecond = -1;
 
     private void Awake()
@@ -148,7 +148,6 @@ public class Spawner : MonoBehaviour
             {
                 _lastTimerSecond = secondsLeft;
 
-                // Don't fire the wave timer on the last wave — it goes straight to mission complete
                 bool isLastWave = LevelManager.Instance != null &&
                                   LevelManager.Instance.CurrentLevel != null &&
                                   _waveCounter + 1 >= LevelManager.Instance.CurrentLevel.wavesToWin &&
@@ -213,7 +212,7 @@ public class Spawner : MonoBehaviour
             if (randomsDone && finalsDone && _enemiesRemoved >= CurrentWave.TotalEnemies)
             {
                 _isBetweenWaves = true;
-                _waveCooldown = _timeBetweenWaves;
+                _waveCooldown = TimeBetweenWaves;
                 _lastTimerSecond = -1;
             }
         }

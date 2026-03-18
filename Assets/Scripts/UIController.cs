@@ -45,6 +45,7 @@ public class UIController : MonoBehaviour
 
     [Header("Floating Text")]
     [SerializeField] private GameObject floatingTextPrefab;
+    private readonly List<FloatingText> _floatingTextPool = new List<FloatingText>();
 
     [SerializeField] private Button speed1Button;
     [SerializeField] private Button speed2Button;
@@ -61,9 +62,9 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject missionCompletePanel;
     [SerializeField] private TMP_Text objectiveText;
-    private bool _isGamePaused = false;
+    private bool _isGamePaused;
 
-    public static bool IsCountdownActive { get; private set; } = false;
+    public static bool IsCountdownActive { get; private set; }
 
     private const float SlowSpeed = 0.5f;
     private const float NormalSpeed = 1f;
@@ -101,6 +102,7 @@ public class UIController : MonoBehaviour
         TowerCard.OnTowerSelected += HandleTowerSelected;
         TowerManager.OnTowerClicked += HandleTowerClicked;
         SceneManager.sceneLoaded += OnSceneLoaded;
+        TutorialManager.OnTutorialComplete += HandleTutorialComplete;
     }
 
     private void OnDisable()
@@ -118,6 +120,7 @@ public class UIController : MonoBehaviour
         TowerCard.OnTowerSelected -= HandleTowerSelected;
         TowerManager.OnTowerClicked -= HandleTowerClicked;
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        TutorialManager.OnTutorialComplete -= HandleTutorialComplete;
     }
 
     private void Start()
@@ -164,17 +167,31 @@ public class UIController : MonoBehaviour
         obj.SetActive(false);
     }
 
-    // ─── Floating Text ────────────────────────────────────────────────────────
+    // ─── Floating Text (pooled) ───────────────────────────────────────────────
 
     private void SpawnFloatingText(int amount, Vector3 worldPosition)
     {
         if (floatingTextPrefab == null)
             return;
 
-        GameObject obj = Instantiate(floatingTextPrefab, worldPosition, Quaternion.identity);
-        FloatingText ft = obj.GetComponent<FloatingText>();
-        if (ft != null)
-            ft.Initialize($"+{amount}", Color.yellow);
+        FloatingText ft = GetPooledFloatingText();
+        ft.transform.position = worldPosition;
+        ft.Initialize($"+{amount}", Color.yellow);
+        ft.gameObject.SetActive(true);
+    }
+
+    private FloatingText GetPooledFloatingText()
+    {
+        foreach (FloatingText ft in _floatingTextPool)
+        {
+            if (ft != null && !ft.gameObject.activeSelf)
+                return ft;
+        }
+
+        GameObject obj = Instantiate(floatingTextPrefab);
+        FloatingText newFt = obj.GetComponent<FloatingText>();
+        _floatingTextPool.Add(newFt);
+        return newFt;
     }
 
     // ─── Wave Timer ───────────────────────────────────────────────────────────
@@ -184,7 +201,6 @@ public class UIController : MonoBehaviour
         if (waveTimerText == null)
             return;
 
-        // Suppress wave timer while boss warning is on screen
         if (bossWarningPanel != null && bossWarningPanel.activeSelf)
             return;
 
@@ -271,7 +287,7 @@ public class UIController : MonoBehaviour
 
     private void HandlePlatformClicked(Platform platform)
     {
-        if (IsCountdownActive || platform.HasTower)
+        if (IsCountdownActive || TutorialManager.IsActive || platform.HasTower)
             return;
 
         _currentPlatform = platform;
@@ -281,7 +297,7 @@ public class UIController : MonoBehaviour
 
     private void HandleTowerClicked(TowerManager tower)
     {
-        if (IsCountdownActive)
+        if (IsCountdownActive || TutorialManager.IsActive)
             return;
 
         _selectedTower = tower;
@@ -478,7 +494,7 @@ public class UIController : MonoBehaviour
 
     public void TogglePause()
     {
-        if (IsCountdownActive)
+        if (IsCountdownActive || TutorialManager.IsActive)
             return;
 
         if ((towerPanel != null && towerPanel.activeSelf) ||
@@ -548,13 +564,30 @@ public class UIController : MonoBehaviour
 
     private IEnumerator ShowObjectiveAndStartCountdown()
     {
-        if (LevelManager.Instance != null && LevelManager.Instance.CurrentLevel != null && objectiveText != null)
+        LevelData level = LevelManager.Instance?.CurrentLevel;
+        bool hasTutorial = level != null
+                           && level.tutorialSteps != null
+                           && level.tutorialSteps.Length > 0
+                           && TutorialManager.Instance != null;
+
+        if (hasTutorial)
         {
-            objectiveText.text = $"Survive {LevelManager.Instance.CurrentLevel.wavesToWin} waves!";
-            objectiveText.gameObject.SetActive(true);
-            yield return new WaitForSeconds(3f);
-            objectiveText.gameObject.SetActive(false);
+            TutorialManager.Instance.StartTutorial(level.tutorialSteps);
         }
+        else
+        {
+            if (Spawner.Instance != null)
+                Spawner.Instance.StartGameWithCountdown(3);
+        }
+
+        yield break;
+    }
+
+    /// <summary>Called by TutorialManager.OnTutorialComplete — closes any open panels then begins the pre-wave countdown.</summary>
+    private void HandleTutorialComplete()
+    {
+        HideTowerPanel();
+        HideTowerActionsPanel();
 
         if (Spawner.Instance != null)
             Spawner.Instance.StartGameWithCountdown(3);
@@ -596,7 +629,6 @@ public class UIController : MonoBehaviour
         if (speed3Button != null) speed3Button.gameObject.SetActive(false);
         if (pauseButton != null) pauseButton.gameObject.SetActive(false);
         if (objectiveText != null) objectiveText.gameObject.SetActive(false);
-
     }
 
     private void ShowUI()

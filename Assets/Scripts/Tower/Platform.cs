@@ -14,22 +14,35 @@ public class Platform : MonoBehaviour
 
     private Collider2D _collider;
     private SpriteRenderer _spriteRenderer;
+    private Camera _mainCamera;
 
     private void Awake()
     {
         _collider = GetComponent<Collider2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _mainCamera = Camera.main;
 
         if (_collider == null)
             Debug.LogError($"Platform '{gameObject.name}': Missing Collider2D!");
     }
 
+    private void OnEnable()
+    {
+        // Re-cache camera in case scene reloaded
+        if (_mainCamera == null)
+            _mainCamera = Camera.main;
+    }
+
     private void Update()
     {
-        if (Camera.main == null)
-            return;
+        if (_mainCamera == null)
+        {
+            _mainCamera = Camera.main;
+            if (_mainCamera == null)
+                return;
+        }
 
-        if (UIController.IsCountdownActive)
+        if (UIController.IsCountdownActive || TutorialManager.IsActive)
             return;
 
         if (towerPanelOpen || Time.timeScale == 0f)
@@ -41,7 +54,7 @@ public class Platform : MonoBehaviour
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
                 return;
 
-            Vector2 rightClickWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            Vector2 rightClickWorld = _mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
             if (_collider != null && _collider.OverlapPoint(rightClickWorld) && HasTower)
             {
@@ -51,7 +64,6 @@ public class Platform : MonoBehaviour
         }
 
         // ─── Universal: Left-click (PC) and tap (mobile/WebGL) ───────────────
-        // Pointer.current covers Mouse, Touchscreen, and browser-simulated touch
         Pointer pointer = Pointer.current;
 
         if (pointer == null || !pointer.press.wasPressedThisFrame)
@@ -61,7 +73,7 @@ public class Platform : MonoBehaviour
             return;
 
         Vector2 screenPos = pointer.position.ReadValue();
-        Vector2 worldPoint = Camera.main.ScreenToWorldPoint(screenPos);
+        Vector2 worldPoint = _mainCamera.ScreenToWorldPoint(screenPos);
 
         if (_collider == null || !_collider.OverlapPoint(worldPoint))
             return;

@@ -18,15 +18,16 @@ public class Enemy : MonoBehaviour
     private float _currentReward;
 
     public int WaypointIndex => _currentWaypoint;
-    public float DistanceToNextWaypoint => Vector3.Distance(transform.position, _targetPosition);
+
+    /// <summary>Squared distance to the next waypoint — avoids Sqrt, safe for relative comparisons.</summary>
+    public float SqrDistanceToNextWaypoint => (transform.position - _targetPosition).sqrMagnitude;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private GameObject healthBarRoot;
     [SerializeField] private Transform healthBar;
     private Vector3 _healthBarOriginalScale;
     private bool _damageTaken;
-
-    private bool _hasBeenCounted = false;
+    private bool _hasBeenCounted;
 
     private void Awake()
     {
@@ -70,9 +71,7 @@ public class Enemy : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, _targetPosition, _currentSpeed * Time.deltaTime);
         UpdateFacingDirection(moveDirection);
 
-        float relativeDistance = (transform.position - _targetPosition).magnitude;
-
-        if (relativeDistance < 0.1f)
+        if ((transform.position - _targetPosition).sqrMagnitude < 0.01f)
         {
             if (_currentWaypoint < _currentPath.Waypoints.Length - 1)
             {

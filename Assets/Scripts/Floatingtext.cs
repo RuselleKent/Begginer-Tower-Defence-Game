@@ -41,6 +41,6 @@ public class FloatingText : MonoBehaviour
         _text.color = new Color(_startColor.r, _startColor.g, _startColor.b, alpha);
 
         if (_elapsed >= Lifetime)
-            Destroy(gameObject);
+            gameObject.SetActive(false);
     }
 }

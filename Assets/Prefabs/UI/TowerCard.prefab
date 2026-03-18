@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -75}
+  m_AnchoredPosition: {x: 0, y: -51}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &8282322950928415201
@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 9069468844209803717}
   - component: {fileID: 4834853795161094582}
   - component: {fileID: -1425715862052391557}
+  - component: {fileID: 6929672278449818693}
   m_Layer: 5
   m_Name: TowerCard
   m_TagString: Untagged
@@ -113,8 +114,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8, y: 28}
-  m_SizeDelta: {x: 250, y: 300}
+  m_AnchoredPosition: {x: 8, y: 29}
+  m_SizeDelta: {x: 320, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4923544070458194944
 MonoBehaviour:
@@ -158,7 +159,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5628342760113990661, guid: 92f89ff6a6228a64faedebe14e489164, type: 3}
+  m_Sprite: {fileID: -5638408413501186520, guid: b9dc99915d65efe4da47f7a84a0d3faf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -224,6 +225,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!225 &6929672278449818693
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190810898997269929}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8960627063960001677
 GameObject:
   m_ObjectHideFlags: 0
