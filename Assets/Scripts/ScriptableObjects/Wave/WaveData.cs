@@ -39,6 +39,9 @@ public class WaveData : ScriptableObject
 
     public float spawnInterval;
 
+    [Tooltip("Seconds to wait after this wave ends before the next wave begins")]
+    public float timeBetweenWaves = 10f;
+
     public int EnemiesPerWave
     {
         get

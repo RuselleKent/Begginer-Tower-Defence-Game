@@ -27,7 +27,7 @@ MonoBehaviour:
     spawnWeight: 30
     healthMultiplier: 3
     armorMultiplier: 1
-    speedMultiplier: 1.6
+    speedMultiplier: 1.5
     rewardMultiplier: 1
   - enemyPrefab: {fileID: 3856578756706975724, guid: 2939b6b37f913044c910c97f66b0f1a3, type: 3}
     poolSize: 8
@@ -55,3 +55,4 @@ MonoBehaviour:
     speedMultiplier: 1
     rewardMultiplier: 1
   spawnInterval: 1.5
+  timeBetweenWaves: 3

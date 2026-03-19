@@ -26,10 +26,8 @@ public class Spawner : MonoBehaviour
     private int _finalSpawnCounter;
     private int _enemiesRemoved;
 
-    private const float TimeBetweenWaves = 1f;
     private float _waveCooldown;
     private bool _isBetweenWaves;
-    private bool _isEndlessMode;
     private bool _hasStarted;
     private bool _bossWarningFired;
     private int _lastTimerSecond = -1;
@@ -150,8 +148,7 @@ public class Spawner : MonoBehaviour
 
                 bool isLastWave = LevelManager.Instance != null &&
                                   LevelManager.Instance.CurrentLevel != null &&
-                                  _waveCounter + 1 >= LevelManager.Instance.CurrentLevel.wavesToWin &&
-                                  !_isEndlessMode;
+                                  _waveCounter + 1 >= LevelManager.Instance.CurrentLevel.wavesToWin;
 
                 if (!isLastWave)
                     OnNextWaveIn?.Invoke(Mathf.Max(0, secondsLeft));
@@ -161,8 +158,7 @@ public class Spawner : MonoBehaviour
             {
                 if (LevelManager.Instance != null &&
                     LevelManager.Instance.CurrentLevel != null &&
-                    _waveCounter + 1 >= LevelManager.Instance.CurrentLevel.wavesToWin &&
-                    !_isEndlessMode)
+                    _waveCounter + 1 >= LevelManager.Instance.CurrentLevel.wavesToWin)
                 {
                     OnMissionComplete?.Invoke();
                     return;
@@ -212,7 +208,7 @@ public class Spawner : MonoBehaviour
             if (randomsDone && finalsDone && _enemiesRemoved >= CurrentWave.TotalEnemies)
             {
                 _isBetweenWaves = true;
-                _waveCooldown = TimeBetweenWaves;
+                _waveCooldown = CurrentWave.timeBetweenWaves;
                 _lastTimerSecond = -1;
             }
         }
@@ -299,7 +295,6 @@ public class Spawner : MonoBehaviour
         Enemy enemy = spawnedObject.GetComponent<Enemy>();
         if (enemy != null)
         {
-            // Pass the immunity duration from the spawn entry
             enemy.Initialize(entry.healthMultiplier, entry.speedMultiplier, entry.rewardMultiplier, entry.armorMultiplier);
             spawnedObject.SetActive(true);
         }
@@ -312,9 +307,10 @@ public class Spawner : MonoBehaviour
     private void HandleEnemyReachedEnd(EnemyData data) => _enemiesRemoved++;
     private void HandleEnemyDestroyed(Enemy enemy) => _enemiesRemoved++;
 
-    /// <summary>Enables endless mode, preventing mission complete from firing after the last wave.</summary>
-    public void EnableEndlessMode()
+    /// <summary>Forces the wave timer to re-broadcast its current value on the next frame. Call this after unpausing.</summary>
+    public void RefreshWaveTimer()
     {
-        _isEndlessMode = true;
+        if (_isBetweenWaves)
+            _lastTimerSecond = -1;
     }
 }

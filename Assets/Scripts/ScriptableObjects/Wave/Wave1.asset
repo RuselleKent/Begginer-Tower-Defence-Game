@@ -31,3 +31,4 @@ MonoBehaviour:
     rewardMultiplier: 1
   finalSpawns: []
   spawnInterval: 2
+  timeBetweenWaves: 3

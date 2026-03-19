@@ -57,6 +57,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private Button speed3Button;
     [SerializeField] private Button pauseButton;
     [SerializeField] private Button nextLevelButton;
+    [SerializeField] private Button quitButton;
 
     [SerializeField] private Color normalButtonColor = Color.white;
     [SerializeField] private Color selectedButtonColor = Color.blue;
@@ -76,6 +77,7 @@ public class UIController : MonoBehaviour
     private const float FastSpeed = 2f;
 
     private Coroutine _bossWarningCoroutine;
+    private Coroutine _warningCoroutine;
     private RangeIndicator _rangeIndicator;
 
     private void Awake()
@@ -144,6 +146,12 @@ public class UIController : MonoBehaviour
 
         if (GameManager.Instance != null)
             HighlightSelectedSpeedButton(GameManager.Instance.GameSpeed);
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        // Browsers block programmatic window closing — hide the quit button on WebGL
+        if (quitButton != null)
+            quitButton.gameObject.SetActive(false);
+#endif
     }
 
     private void Update()
@@ -201,13 +209,28 @@ public class UIController : MonoBehaviour
 
     // ─── Wave Timer ───────────────────────────────────────────────────────────
 
+    /// <summary>Returns true if any blocking panel is currently visible.</summary>
+    private bool IsAnyPanelShowing()
+    {
+        return TutorialManager.IsActive ||
+               (pausePanel != null && pausePanel.activeSelf) ||
+               (gameOverPanel != null && gameOverPanel.activeSelf) ||
+               (missionCompletePanel != null && missionCompletePanel.activeSelf) ||
+               (towerPanel != null && towerPanel.activeSelf) ||
+               (towerActionsPanel != null && towerActionsPanel.activeSelf) ||
+               (bossWarningPanel != null && bossWarningPanel.activeSelf);
+    }
+
     private void ShowNextWaveTimer(int seconds)
     {
         if (waveTimerText == null)
             return;
 
-        if (bossWarningPanel != null && bossWarningPanel.activeSelf)
+        if (IsAnyPanelShowing())
+        {
+            HideNextWaveTimer();
             return;
+        }
 
         waveTimerText.gameObject.SetActive(true);
         waveTimerText.text = seconds > 0 ? $"Next wave in {seconds}s..." : "Incoming!";
@@ -318,6 +341,8 @@ public class UIController : MonoBehaviour
         if (towerActionsPanel != null && towerActionsPanel.activeSelf)
             HideTowerActionsPanel();
 
+        HideNextWaveTimer();
+
         towerPanel.SetActive(true);
         Platform.towerPanelOpen = true;
 
@@ -334,6 +359,7 @@ public class UIController : MonoBehaviour
 
         Platform.towerPanelOpen = false;
         _rangeIndicator?.Hide();
+        HideNotEnoughResourcesPanel();
 
         if (GameManager.Instance != null)
             GameManager.Instance.SetTimeScale(GameManager.Instance.GameSpeed);
@@ -373,7 +399,8 @@ public class UIController : MonoBehaviour
         if (_currentPlatform == null || _currentPlatform.transform.childCount > 0)
         {
             HideTowerPanel();
-            StartCoroutine(ShowWarningMessage("This platform already has a tower!"));
+            if (_warningCoroutine != null) StopCoroutine(_warningCoroutine);
+            _warningCoroutine = StartCoroutine(ShowWarningMessage("This platform already has a tower!"));
             return;
         }
 
@@ -385,7 +412,6 @@ public class UIController : MonoBehaviour
         }
         else
         {
-            // Keep tower panel open so the player can pick a cheaper tower
             ShowNotEnoughResourcesPanel();
         }
     }
@@ -432,6 +458,8 @@ public class UIController : MonoBehaviour
 
         if (towerPanel != null && towerPanel.activeSelf)
             HideTowerPanel();
+
+        HideNextWaveTimer();
 
         towerActionsPanel.SetActive(true);
         Platform.towerPanelOpen = true;
@@ -491,6 +519,7 @@ public class UIController : MonoBehaviour
             yield return new WaitForSecondsRealtime(3f);
             warningText.gameObject.SetActive(false);
         }
+        _warningCoroutine = null;
     }
 
     // ─── Speed Buttons ────────────────────────────────────────────────────────
@@ -541,6 +570,15 @@ public class UIController : MonoBehaviour
 
         _isGamePaused = !_isGamePaused;
 
+        if (_isGamePaused)
+        {
+            HideNextWaveTimer();
+        }
+        else
+        {
+            Spawner.Instance?.RefreshWaveTimer();
+        }
+
         if (pausePanel != null)
             pausePanel.SetActive(_isGamePaused);
 
@@ -556,11 +594,15 @@ public class UIController : MonoBehaviour
             LevelManager.Instance.LoadLevel(LevelManager.Instance.CurrentLevel);
     }
 
+    /// <summary>Quits the game. Hidden on WebGL builds since browsers block programmatic window closing.</summary>
     public void QuitGame()
     {
-        Application.Quit();
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_WEBGL
+        // No-op: button is hidden at runtime on WebGL via Start()
+#else
+        Application.Quit();
 #endif
     }
 
@@ -579,6 +621,14 @@ public class UIController : MonoBehaviour
 
         HideNextWaveTimer();
         HideNotEnoughResourcesPanel();
+
+        if (_warningCoroutine != null)
+        {
+            StopCoroutine(_warningCoroutine);
+            _warningCoroutine = null;
+        }
+        if (warningText != null)
+            warningText.gameObject.SetActive(false);
 
         if (gameOverPanel != null)
             gameOverPanel.SetActive(true);
@@ -647,18 +697,6 @@ public class UIController : MonoBehaviour
             GameManager.Instance.SetTimeScale(0f);
     }
 
-    public void EnterEndlessMode()
-    {
-        if (missionCompletePanel != null)
-            missionCompletePanel.SetActive(false);
-
-        if (GameManager.Instance != null)
-            GameManager.Instance.SetTimeScale(GameManager.Instance.GameSpeed);
-
-        if (Spawner.Instance != null)
-            Spawner.Instance.EnableEndlessMode();
-    }
-
     private void HideUI()
     {
         if (waveText != null) waveText.gameObject.SetActive(false);
@@ -692,7 +730,16 @@ public class UIController : MonoBehaviour
         if (towerActionsPanel != null) towerActionsPanel.SetActive(false);
         if (countdownPanel != null) countdownPanel.SetActive(false);
         if (bossWarningPanel != null) bossWarningPanel.SetActive(false);
+        HideNextWaveTimer();
         HideNotEnoughResourcesPanel();
+
+        if (_warningCoroutine != null)
+        {
+            StopCoroutine(_warningCoroutine);
+            _warningCoroutine = null;
+        }
+        if (warningText != null)
+            warningText.gameObject.SetActive(false);
 
         _rangeIndicator?.Hide();
 
@@ -706,37 +753,21 @@ public class UIController : MonoBehaviour
         _isGamePaused = false;
     }
 
-    public void LoadNextLevel()
-    {
-        if (LevelManager.Instance == null)
-            return;
-
-        var levelManager = LevelManager.Instance;
-        if (levelManager.CurrentLevel == null || levelManager.allLevels == null)
-            return;
-
-        int currentIndex = Array.IndexOf(levelManager.allLevels, levelManager.CurrentLevel);
-        int nextIndex = currentIndex + 1;
-
-        if (nextIndex < levelManager.allLevels.Length)
-        {
-            if (missionCompletePanel != null)
-                missionCompletePanel.SetActive(false);
-
-            levelManager.LoadLevel(levelManager.allLevels[nextIndex]);
-        }
-    }
-
     private void UpdateNextLevelButton()
     {
-        if (nextLevelButton == null || LevelManager.Instance == null)
-            return;
+        if (nextLevelButton == null || LevelManager.Instance == null) return;
 
-        var levelManager = LevelManager.Instance;
-        if (levelManager.CurrentLevel == null || levelManager.allLevels == null)
-            return;
+        int currentIndex = Array.IndexOf(LevelManager.Instance.allLevels, LevelManager.Instance.CurrentLevel);
+        nextLevelButton.gameObject.SetActive(currentIndex < LevelManager.Instance.allLevels.Length - 1);
+    }
 
-        int currentIndex = Array.IndexOf(levelManager.allLevels, levelManager.CurrentLevel);
-        nextLevelButton.interactable = currentIndex + 1 < levelManager.allLevels.Length;
+    /// <summary>Loads the next level in the level list.</summary>
+    public void LoadNextLevel()
+    {
+        if (LevelManager.Instance == null) return;
+
+        int currentIndex = Array.IndexOf(LevelManager.Instance.allLevels, LevelManager.Instance.CurrentLevel);
+        if (currentIndex < LevelManager.Instance.allLevels.Length - 1)
+            LevelManager.Instance.LoadLevel(LevelManager.Instance.allLevels[currentIndex + 1]);
     }
 }
