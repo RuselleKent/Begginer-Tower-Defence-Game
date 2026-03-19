@@ -299,7 +299,8 @@ public class Spawner : MonoBehaviour
         Enemy enemy = spawnedObject.GetComponent<Enemy>();
         if (enemy != null)
         {
-            enemy.Initialize(entry.healthMultiplier, entry.speedMultiplier, entry.rewardMultiplier);
+            // Pass the immunity duration from the spawn entry
+            enemy.Initialize(entry.healthMultiplier, entry.speedMultiplier, entry.rewardMultiplier, entry.armorMultiplier);
             spawnedObject.SetActive(true);
         }
         else

@@ -32,6 +32,11 @@ public class UIController : MonoBehaviour
     [SerializeField] private TMP_Text towerInfoText;
     private TowerManager _selectedTower;
 
+    [Header("Not Enough Resources")]
+    [SerializeField] private TMP_Text notEnoughResourcesText;
+    private const float NotEnoughResourcesDisplayDuration = 2f;
+    private Coroutine _notEnoughResourcesCoroutine;
+
     [Header("Countdown")]
     [SerializeField] private GameObject countdownPanel;
     [SerializeField] private TMP_Text countdownText;
@@ -376,13 +381,46 @@ public class UIController : MonoBehaviour
         {
             GameManager.Instance.SpendResources(towerData.cost);
             _currentPlatform.PlaceTower(towerData);
+            HideTowerPanel();
         }
         else
         {
-            StartCoroutine(ShowWarningMessage("Not enough resources!"));
+            // Keep tower panel open so the player can pick a cheaper tower
+            ShowNotEnoughResourcesPanel();
+        }
+    }
+
+    // ─── Not Enough Resources ─────────────────────────────────────────────────
+
+    private void ShowNotEnoughResourcesPanel()
+    {
+        if (notEnoughResourcesText == null)
+            return;
+
+        if (_notEnoughResourcesCoroutine != null)
+            StopCoroutine(_notEnoughResourcesCoroutine);
+
+        notEnoughResourcesText.gameObject.SetActive(true);
+        _notEnoughResourcesCoroutine = StartCoroutine(AutoHideNotEnoughResources());
+    }
+
+    private IEnumerator AutoHideNotEnoughResources()
+    {
+        yield return new WaitForSecondsRealtime(NotEnoughResourcesDisplayDuration);
+        HideNotEnoughResourcesPanel();
+    }
+
+    /// <summary>Immediately hides the not enough resources text.</summary>
+    public void HideNotEnoughResourcesPanel()
+    {
+        if (_notEnoughResourcesCoroutine != null)
+        {
+            StopCoroutine(_notEnoughResourcesCoroutine);
+            _notEnoughResourcesCoroutine = null;
         }
 
-        HideTowerPanel();
+        if (notEnoughResourcesText != null)
+            notEnoughResourcesText.gameObject.SetActive(false);
     }
 
     // ─── Tower Actions Panel ──────────────────────────────────────────────────
@@ -539,6 +577,9 @@ public class UIController : MonoBehaviour
         if (GameManager.Instance != null)
             GameManager.Instance.SetTimeScale(0f);
 
+        HideNextWaveTimer();
+        HideNotEnoughResourcesPanel();
+
         if (gameOverPanel != null)
             gameOverPanel.SetActive(true);
     }
@@ -597,6 +638,7 @@ public class UIController : MonoBehaviour
     {
         UpdateNextLevelButton();
         HideNextWaveTimer();
+        HideNotEnoughResourcesPanel();
 
         if (missionCompletePanel != null)
             missionCompletePanel.SetActive(true);
@@ -650,6 +692,7 @@ public class UIController : MonoBehaviour
         if (towerActionsPanel != null) towerActionsPanel.SetActive(false);
         if (countdownPanel != null) countdownPanel.SetActive(false);
         if (bossWarningPanel != null) bossWarningPanel.SetActive(false);
+        HideNotEnoughResourcesPanel();
 
         _rangeIndicator?.Hide();
 

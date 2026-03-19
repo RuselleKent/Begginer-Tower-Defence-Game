@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Enemy_Orc
   m_EditorClassIdentifier: 
   lives: 3
+  armor: 0
   damage: 2
   speed: 2
   resourceReward: 5

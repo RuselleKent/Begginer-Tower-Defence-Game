@@ -16,10 +16,13 @@ public class EnemySpawnEntry
     public int spawnWeight = 1;
 
     [Header("Stat Multipliers")]
-    [Tooltip("Multiplies the base health of this enemy for this wave. 1 = normal, 2 = double HP")]
+    [Tooltip("Multiplies the base health of this enemy for this wave")]
     public float healthMultiplier = 1f;
 
-    [Tooltip("Multiplies the base speed of this enemy for this wave. 1 = normal, 1.5 = 50% faster")]
+    [Tooltip("Multiplies the base armor of this enemy for this wave. 0 = no armor")]
+    public float armorMultiplier = 1f;
+
+    [Tooltip("Multiplies the base speed of this enemy for this wave")]
     public float speedMultiplier = 1f;
 
     [Tooltip("Multiplies the base resource reward of this enemy for this wave")]
@@ -36,7 +39,6 @@ public class WaveData : ScriptableObject
 
     public float spawnInterval;
 
-    // Total random enemies derived from spawn counts
     public int EnemiesPerWave
     {
         get
@@ -54,6 +56,5 @@ public class WaveData : ScriptableObject
         }
     }
 
-    // Grand total including final spawns
     public int TotalEnemies => EnemiesPerWave + (finalSpawns != null ? finalSpawns.Length : 0);
 }

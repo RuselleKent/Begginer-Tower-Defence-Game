@@ -38,6 +38,7 @@ public class TowerCard : MonoBehaviour
         UpdateAffordability(GameManager.Instance != null ? GameManager.Instance.Resources : 0);
     }
 
+    /// <summary>Always fires the selected event — affordability is handled by UIController.</summary>
     public void PlaceTower()
     {
         OnTowerSelected?.Invoke(_towerData);
@@ -54,8 +55,10 @@ public class TowerCard : MonoBehaviour
             return;
 
         bool canAfford = currentResources >= _towerData.cost;
+
+        // Dim the card visually but keep it always clickable
         _canvasGroup.alpha = canAfford ? 1f : 0.4f;
-        _canvasGroup.interactable = canAfford;
-        _canvasGroup.blocksRaycasts = canAfford;
+        _canvasGroup.interactable = true;
+        _canvasGroup.blocksRaycasts = true;
     }
 }

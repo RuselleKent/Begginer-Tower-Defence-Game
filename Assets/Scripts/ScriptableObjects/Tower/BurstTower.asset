@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Burst Tower
   range: 4
-  shootInterval: 0.03
+  shootInterval: 0.2
   projectileSpeed: 8
   projectileDuration: 0.5
-  projectileSize: 0.4
+  projectileSize: 0.5
   damage: 0.1
   cost: 75
   refundValue: 30

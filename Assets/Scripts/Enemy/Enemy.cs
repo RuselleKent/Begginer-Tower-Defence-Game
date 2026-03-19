@@ -16,18 +16,34 @@ public class Enemy : MonoBehaviour
     private float _maxLives;
     private float _currentSpeed;
     private float _currentReward;
+    private bool _hasBeenCounted;
 
     public int WaypointIndex => _currentWaypoint;
 
     /// <summary>Squared distance to the next waypoint — avoids Sqrt, safe for relative comparisons.</summary>
     public float SqrDistanceToNextWaypoint => (transform.position - _targetPosition).sqrMagnitude;
 
+    [Header("Visuals")]
     [SerializeField] private SpriteRenderer spriteRenderer;
+
+    [Header("Health Bar")]
     [SerializeField] private GameObject healthBarRoot;
     [SerializeField] private Transform healthBar;
     private Vector3 _healthBarOriginalScale;
     private bool _damageTaken;
-    private bool _hasBeenCounted;
+
+    [Header("Armor Bar")]
+    [SerializeField] private GameObject armorBarRoot;
+    [SerializeField] private Transform armorBar;
+    private Vector3 _armorBarOriginalScale;
+    private float _armor;
+    private float _maxArmor;
+
+    [Header("Armor Visuals")]
+    [Tooltip("Assign only on enemies that have armor break animations. Leave empty for normal enemies.")]
+    [SerializeField] private Animator armorAnimator;
+
+    private static readonly int ArmorBrokenParam = Animator.StringToHash("ArmorBroken");
 
     private void Awake()
     {
@@ -51,6 +67,9 @@ public class Enemy : MonoBehaviour
             _healthBarOriginalScale = healthBar.localScale;
         else
             Debug.LogWarning($"Enemy '{gameObject.name}': Health bar Transform not assigned.");
+
+        if (armorBar != null)
+            _armorBarOriginalScale = armorBar.localScale;
     }
 
     private void OnEnable()
@@ -87,11 +106,48 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Applies damage to the enemy. Armor absorbs damage first.
+    /// Any overflow after armor breaks carries into health.
+    /// </summary>
     public void TakeDamage(float damage)
     {
         if (_hasBeenCounted)
             return;
 
+        if (_armor > 0f)
+        {
+            _armor -= damage;
+
+            if (_armor <= 0f)
+            {
+                float overflow = -_armor;
+                _armor = 0f;
+
+                if (armorBarRoot != null)
+                    armorBarRoot.SetActive(false);
+
+                UpdateArmorBar();
+
+                if (armorAnimator != null)
+                    armorAnimator.SetTrigger(ArmorBrokenParam);
+
+                if (overflow > 0f)
+                    ApplyHealthDamage(overflow);
+            }
+            else
+            {
+                UpdateArmorBar();
+            }
+
+            return;
+        }
+
+        ApplyHealthDamage(damage);
+    }
+
+    private void ApplyHealthDamage(float damage)
+    {
         if (!_damageTaken)
         {
             _damageTaken = true;
@@ -100,10 +156,10 @@ public class Enemy : MonoBehaviour
         }
 
         _lives -= damage;
-        _lives = Mathf.Max(_lives, 0);
+        _lives = Mathf.Max(_lives, 0f);
         UpdateHealthBar();
 
-        if (_lives <= 0)
+        if (_lives <= 0f)
         {
             _hasBeenCounted = true;
             OnEnemyDestroyed?.Invoke(this);
@@ -116,10 +172,21 @@ public class Enemy : MonoBehaviour
         if (healthBar == null)
             return;
 
-        float healthPercent = _maxLives > 0 ? _lives / _maxLives : 0f;
+        float percent = _maxLives > 0f ? _lives / _maxLives : 0f;
         Vector3 scale = _healthBarOriginalScale;
-        scale.x = _healthBarOriginalScale.x * healthPercent;
+        scale.x = _healthBarOriginalScale.x * percent;
         healthBar.localScale = scale;
+    }
+
+    private void UpdateArmorBar()
+    {
+        if (armorBar == null || _maxArmor <= 0f)
+            return;
+
+        float percent = _armor / _maxArmor;
+        Vector3 scale = _armorBarOriginalScale;
+        scale.x = _armorBarOriginalScale.x * percent;
+        armorBar.localScale = scale;
     }
 
     /// <summary>Flips the sprite horizontally based on horizontal movement direction.</summary>
@@ -134,8 +201,8 @@ public class Enemy : MonoBehaviour
             spriteRenderer.flipX = false;
     }
 
-    /// <summary>Initializes the enemy stats and resets health bar visibility.</summary>
-    public void Initialize(float healthMultiplier, float speedMultiplier, float rewardMultiplier)
+    /// <summary>Initializes the enemy stats, health, and armor.</summary>
+    public void Initialize(float healthMultiplier, float speedMultiplier, float rewardMultiplier, float armorMultiplier = 1f)
     {
         if (data == null)
         {
@@ -145,15 +212,23 @@ public class Enemy : MonoBehaviour
 
         _hasBeenCounted = false;
         _damageTaken = false;
+
         _maxLives = data.lives * healthMultiplier;
         _lives = _maxLives;
         _currentSpeed = data.speed * speedMultiplier;
         _currentReward = data.resourceReward * rewardMultiplier;
 
+        _maxArmor = data.armor * armorMultiplier;
+        _armor = _maxArmor;
+
         if (healthBarRoot != null)
             healthBarRoot.SetActive(false);
 
+        if (armorBarRoot != null)
+            armorBarRoot.SetActive(_maxArmor > 0f);
+
         UpdateHealthBar();
+        UpdateArmorBar();
     }
 
     public float GetCurrentReward() => _currentReward;
