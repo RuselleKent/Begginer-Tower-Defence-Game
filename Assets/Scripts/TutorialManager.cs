@@ -107,6 +107,10 @@ public class TutorialManager : MonoBehaviour
 
     private void AdvanceStep()
     {
+        // Guard against clicks before the tutorial has been started.
+        if (_steps == null)
+            return;
+
         _currentStepIndex++;
 
         if (_currentStepIndex >= _steps.Length)

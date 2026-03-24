@@ -28,7 +28,9 @@ public class MainMenuController : MonoBehaviour
             return;
         }
 
-        if (LevelManager.Instance.allLevels == null || index >= LevelManager.Instance.allLevels.Length)
+        if (LevelManager.Instance.allLevels == null
+            || index < 0
+            || index >= LevelManager.Instance.allLevels.Length)
         {
             Debug.LogError($"MainMenuController: Level index {index} is out of range!");
             return;
@@ -37,12 +39,13 @@ public class MainMenuController : MonoBehaviour
         LevelManager.Instance.LoadLevel(LevelManager.Instance.allLevels[index]);
     }
 
+    /// <summary>Quits the application or exits play mode in the Editor.</summary>
     public void QuitGame()
     {
         Application.Quit();
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-        #endif
+#endif
     }
 }

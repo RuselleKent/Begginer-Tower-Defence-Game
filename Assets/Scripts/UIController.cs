@@ -69,12 +69,14 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject missionCompletePanel;
     [SerializeField] private TMP_Text objectiveText;
     private bool _isGamePaused;
+    private bool _isGameOver;
 
     public static bool IsCountdownActive { get; private set; }
 
     private const float SlowSpeed = 0.5f;
     private const float NormalSpeed = 1f;
     private const float FastSpeed = 2f;
+    private const string ItchIoUrl = "https://play.unity.com/en/games/79da6443-ef6a-499c-9b56-681cc1022f9d/towerdefenders";
 
     private Coroutine _bossWarningCoroutine;
     private Coroutine _warningCoroutine;
@@ -144,14 +146,11 @@ public class UIController : MonoBehaviour
         if (closeTowerActionsButton != null)
             closeTowerActionsButton.onClick.AddListener(HideTowerActionsPanel);
 
+        if (quitButton != null)
+            quitButton.onClick.AddListener(QuitGame);
+
         if (GameManager.Instance != null)
             HighlightSelectedSpeedButton(GameManager.Instance.GameSpeed);
-
-#if UNITY_WEBGL && !UNITY_EDITOR
-        // Browsers block programmatic window closing — hide the quit button on WebGL
-        if (quitButton != null)
-            quitButton.gameObject.SetActive(false);
-#endif
     }
 
     private void Update()
@@ -257,8 +256,13 @@ public class UIController : MonoBehaviour
         if (livesText != null)
             livesText.text = $"Lives: {currentLives}";
 
-        if (currentLives <= 0)
+        // Guard: only trigger game-over once, even if multiple enemies reach the
+        // end in the same frame and fire multiple OnLivesChanged events.
+        if (currentLives <= 0 && !_isGameOver)
+        {
+            _isGameOver = true;
             ShowGameOver();
+        }
     }
 
     private void UpdateResourcesText(int currentResources)
@@ -352,6 +356,7 @@ public class UIController : MonoBehaviour
         PopulateTowerCards();
     }
 
+    /// <summary>Hides the tower selection panel and resumes the game.</summary>
     public void HideTowerPanel()
     {
         if (towerPanel != null)
@@ -486,6 +491,7 @@ public class UIController : MonoBehaviour
             _rangeIndicator.Show(_selectedTower.transform.position, d.range);
     }
 
+    /// <summary>Hides the tower actions panel and resumes the game.</summary>
     public void HideTowerActionsPanel()
     {
         if (towerActionsPanel != null)
@@ -501,6 +507,7 @@ public class UIController : MonoBehaviour
         _currentPlatform = null;
     }
 
+    /// <summary>Refunds the selected tower and closes the actions panel.</summary>
     public void RefundTower()
     {
         if (_selectedTower != null)
@@ -559,6 +566,7 @@ public class UIController : MonoBehaviour
 
     // ─── Pause ────────────────────────────────────────────────────────────────
 
+    /// <summary>Toggles the pause state. Blocked during countdown, tutorial, and open panels.</summary>
     public void TogglePause()
     {
         if (IsCountdownActive || TutorialManager.IsActive)
@@ -588,24 +596,38 @@ public class UIController : MonoBehaviour
 
     // ─── Scene / Navigation ───────────────────────────────────────────────────
 
+    /// <summary>Restarts the current level.</summary>
     public void RestartLevel()
     {
         if (LevelManager.Instance != null && LevelManager.Instance.CurrentLevel != null)
             LevelManager.Instance.LoadLevel(LevelManager.Instance.CurrentLevel);
     }
 
-    /// <summary>Quits the game. Hidden on WebGL builds since browsers block programmatic window closing.</summary>
+    /// <summary>
+    /// Quits the application.
+    /// Editor: exits play mode.
+    /// WebGL: attempts to close the current tab, redirects to game page if unsuccessful.
+    /// Standalone: calls Application.Quit().
+    /// </summary>
     public void QuitGame()
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #elif UNITY_WEBGL
-        // No-op: button is hidden at runtime on WebGL via Start()
+        Application.ExternalEval(@"
+            window.close();
+            setTimeout(function() {
+                if (!window.closed) {
+                    window.location.href = '" + ItchIoUrl + @"';
+                }
+            }, 150);
+        ");
 #else
         Application.Quit();
 #endif
     }
 
+    /// <summary>Returns to the main menu and resets time scale.</summary>
     public void GoToMainMenu()
     {
         if (GameManager.Instance != null)
@@ -655,6 +677,10 @@ public class UIController : MonoBehaviour
 
     private IEnumerator ShowObjectiveAndStartCountdown()
     {
+        // Wait one frame so all Awake() methods in the newly loaded scene
+        // (including Spawner) have run and Instance references are valid.
+        yield return null;
+
         LevelData level = LevelManager.Instance?.CurrentLevel;
         bool hasTutorial = level != null
                            && level.tutorialSteps != null
@@ -670,8 +696,6 @@ public class UIController : MonoBehaviour
             if (Spawner.Instance != null)
                 Spawner.Instance.StartGameWithCountdown(3);
         }
-
-        yield break;
     }
 
     /// <summary>Called by TutorialManager.OnTutorialComplete — closes any open panels then begins the pre-wave countdown.</summary>
@@ -749,8 +773,19 @@ public class UIController : MonoBehaviour
             _bossWarningCoroutine = null;
         }
 
+        // Clear stale card references from previous level load.
+        foreach (var card in activeCards)
+        {
+            if (card != null)
+                Destroy(card);
+        }
+        activeCards.Clear();
+
         IsCountdownActive = false;
         _isGamePaused = false;
+
+        // Reset game-over guard so it can fire again on the next run.
+        _isGameOver = false;
     }
 
     private void UpdateNextLevelButton()

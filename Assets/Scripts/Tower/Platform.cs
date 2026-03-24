@@ -9,8 +9,13 @@ public class Platform : MonoBehaviour
 
     public static bool towerPanelOpen { get; set; } = false;
 
-    public bool HasTower => transform.childCount > 0;
-    public TowerManager PlacedTower => HasTower ? transform.GetChild(0).GetComponent<TowerManager>() : null;
+    /// <summary>True only when a valid TowerManager child is present on this platform.</summary>
+    public bool HasTower => PlacedTower != null;
+
+    /// <summary>Returns the TowerManager on the first child, or null if none exists.</summary>
+    public TowerManager PlacedTower => transform.childCount > 0
+        ? transform.GetChild(0).GetComponent<TowerManager>()
+        : null;
 
     private Collider2D _collider;
     private SpriteRenderer _spriteRenderer;

@@ -17,7 +17,7 @@ MonoBehaviour:
   shootInterval: 1
   projectileSpeed: 4
   projectileDuration: 3
-  projectileSize: 1
+  projectileSize: 1.2
   damage: 10
   cost: 100
   refundValue: 50

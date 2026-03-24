@@ -6,17 +6,23 @@ public class ObjectPooler : MonoBehaviour
     [SerializeField] private GameObject prefab;
     [SerializeField] private int poolSize = 5;
     private List<GameObject> _pool;
+    private bool _initialized;
 
     private void Start()
     {
-        // Only auto-initialize when set up manually in the Inspector
-        if (prefab != null)
+        // Only auto-initialize when set up manually in the Inspector.
+        // Skip if Spawner already called Initialize() at runtime.
+        if (!_initialized && prefab != null)
             Initialize(prefab, poolSize);
     }
 
     /// <summary>Initializes the pool with the given prefab and size. Called by Spawner at runtime.</summary>
     public void Initialize(GameObject enemyPrefab, int size)
     {
+        if (_initialized)
+            return;
+
+        _initialized = true;
         prefab = enemyPrefab;
         poolSize = size;
 

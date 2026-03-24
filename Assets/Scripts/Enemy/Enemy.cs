@@ -74,11 +74,10 @@ public class Enemy : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_currentPath != null)
-        {
-            _currentWaypoint = 0;
-            _targetPosition = _currentPath.GetPosition(_currentWaypoint);
-        }
+        // Waypoint and target are reset inside Initialize() for pooled enemies.
+        // This guard handles the rare case of re-enabling before Initialize is called.
+        if (_currentPath != null && _currentWaypoint == 0)
+            _targetPosition = _currentPath.GetPosition(0);
     }
 
     private void Update()
@@ -201,7 +200,7 @@ public class Enemy : MonoBehaviour
             spriteRenderer.flipX = false;
     }
 
-    /// <summary>Initializes the enemy stats, health, and armor.</summary>
+    /// <summary>Initializes the enemy stats, health, armor, and resets path progress.</summary>
     public void Initialize(float healthMultiplier, float speedMultiplier, float rewardMultiplier, float armorMultiplier = 1f)
     {
         if (data == null)
@@ -212,6 +211,11 @@ public class Enemy : MonoBehaviour
 
         _hasBeenCounted = false;
         _damageTaken = false;
+
+        // Reset path progress so pooled enemies always start from waypoint 0.
+        _currentWaypoint = 0;
+        if (_currentPath != null)
+            _targetPosition = _currentPath.GetPosition(0);
 
         _maxLives = data.lives * healthMultiplier;
         _lives = _maxLives;

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Burst Tower
   range: 4
-  shootInterval: 0.2
+  shootInterval: 0.1
   projectileSpeed: 8
   projectileDuration: 0.5
   projectileSize: 0.3
