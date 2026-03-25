@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 719748e4763e98048adf1c28611e2936
+guid: ecce8723e5318f9408252be33be1f43b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4275019373794020124
-    second: path2-noWM_0
+      213: 2273087904442332330
+    second: mission comlete_0
+  - first:
+      213: -2347167952485243687
+    second: mission comlete_1
+  - first:
+      213: -7170217501832850627
+    second: mission comlete_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +119,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: path2-noWM_0
+      name: mission comlete_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1312
-        height: 752
+        x: 53
+        y: 246
+        width: 675
+        height: 270
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +134,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4e4381197841ca4c0800000000000000
-      internalID: -4275019373794020124
+      spriteID: aa4b58fd761ab8f10800000000000000
+      internalID: 2273087904442332330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mission comlete_1
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 479
+        width: 74
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d4afebde2f2d6fd0800000000000000
+      internalID: -2347167952485243687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mission comlete_2
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 411
+        width: 63
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d33d6f8eb254e7c90800000000000000
+      internalID: -7170217501832850627
       vertices: []
       indices: 
       edges: []
@@ -148,7 +198,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      path2-noWM_0: -4275019373794020124
+      mission comlete_0: 2273087904442332330
+      mission comlete_1: -2347167952485243687
+      mission comlete_2: -7170217501832850627
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

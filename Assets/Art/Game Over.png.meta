@@ -1,40 +1,49 @@
 fileFormatVersion: 2
-guid: 7b64d996cf39c4c4b93489f69748ea66
+guid: ac3767defed3c5c4ab6b820c0ec86669
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2126654949759144205
-    second: "\u2014Pngtree\u2014simple pixel game button element_5995881_0"
+      213: -8557816031639189491
+    second: Game Over_0
   - first:
-      213: -8114665413238244439
-    second: "\u2014Pngtree\u2014simple pixel game button element_5995881_1"
+      213: 4785595699045466773
+    second: Game Over_1
   - first:
-      213: 7834803025558914932
-    second: "\u2014Pngtree\u2014simple pixel game button element_5995881_2"
+      213: 9126758372691076483
+    second: Game Over_2
   - first:
-      213: 2337025215378307827
-    second: "\u2014Pngtree\u2014simple pixel game button element_5995881_3"
+      213: 4597229921433945903
+    second: Game Over_3
   - first:
-      213: 3071537689281939538
-    second: "\u2014Pngtree\u2014simple pixel game button element_5995881_4"
+      213: -6722920109146148863
+    second: Game Over_4
   - first:
-      213: 4453465145718020644
-    second: "\u2014Pngtree\u2014simple pixel game button element_5995881_5"
+      213: 8035775801353264071
+    second: Game Over_5
   - first:
-      213: 1772172442957544640
-    second: "\u2014Pngtree\u2014simple pixel game button element_5995881_6"
+      213: -2012951760658599217
+    second: Game Over_6
   - first:
-      213: 7058313966151314877
-    second: "\u2014Pngtree\u2014simple pixel game button element_5995881_7"
+      213: -8741599288913197916
+    second: Game Over_7
   - first:
-      213: -5859898966246052319
-    second: "\u2014Pngtree\u2014simple pixel game button element_5995881_8"
+      213: -2108473678774902194
+    second: Game Over_8
   - first:
-      213: 6455632712161910737
-    second: "\u2014Pngtree\u2014simple pixel game button element_5995881_9"
+      213: -7117140279469556186
+    second: Game Over_9
   - first:
-      213: 9114325257503319939
-    second: "\u2014Pngtree\u2014simple pixel game button element_5995881_10"
+      213: -5215923968580504157
+    second: Game Over_10
+  - first:
+      213: -8895076877208993024
+    second: Game Over_11
+  - first:
+      213: -6606649373194738081
+    second: Game Over_12
+  - first:
+      213: 8848872344748290357
+    second: Game Over_13
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -143,243 +152,309 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\u2014Pngtree\u2014simple pixel game button element_5995881_0"
+      name: Game Over_0
       rect:
         serializedVersion: 2
-        x: 494
-        y: 1571
-        width: 993
-        height: 239
+        x: 112
+        y: 622
+        width: 6
+        height: 22
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d015838c865638d10800000000000000
-      internalID: 2126654949759144205
+      spriteID: d08c00519a78c3980800000000000000
+      internalID: -8557816031639189491
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u2014Pngtree\u2014simple pixel game button element_5995881_1"
+      name: Game Over_1
       rect:
         serializedVersion: 2
-        x: 144
-        y: 1182
-        width: 260
-        height: 239
+        x: 670
+        y: 637
+        width: 6
+        height: 15
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9ab39cccccae26f80800000000000000
-      internalID: -8114665413238244439
+      spriteID: 5920e30eee9d96240800000000000000
+      internalID: 4785595699045466773
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u2014Pngtree\u2014simple pixel game button element_5995881_2"
+      name: Game Over_2
       rect:
         serializedVersion: 2
-        x: 697
-        y: 1181
-        width: 605
-        height: 239
+        x: 65
+        y: 549
+        width: 6
+        height: 22
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 477489757dfcabc60800000000000000
-      internalID: 7834803025558914932
+      spriteID: 385e2136262c8ae70800000000000000
+      internalID: 9126758372691076483
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u2014Pngtree\u2014simple pixel game button element_5995881_3"
+      name: Game Over_3
       rect:
         serializedVersion: 2
-        x: 1638
-        y: 1225
-        width: 217
-        height: 304
+        x: 77
+        y: 473
+        width: 67
+        height: 138
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3fa31c12d08ce6020800000000000000
-      internalID: 2337025215378307827
+      spriteID: f270ed1a144accf30800000000000000
+      internalID: 4597229921433945903
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u2014Pngtree\u2014simple pixel game button element_5995881_4"
+      name: Game Over_4
       rect:
         serializedVersion: 2
-        x: 144
-        y: 880
-        width: 260
-        height: 239
+        x: 637
+        y: 408
+        width: 74
+        height: 214
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 258cfd3314b40aa20800000000000000
-      internalID: 3071537689281939538
+      spriteID: 1007301c7c363b2a0800000000000000
+      internalID: -6722920109146148863
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u2014Pngtree\u2014simple pixel game button element_5995881_5"
+      name: Game Over_5
       rect:
         serializedVersion: 2
-        x: 675
-        y: 879
-        width: 649
-        height: 239
+        x: 625
+        y: 541
+        width: 7
+        height: 6
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 42a1b1e54f2edcd30800000000000000
-      internalID: 4453465145718020644
+      spriteID: 7cb5756148fc48f60800000000000000
+      internalID: 8035775801353264071
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u2014Pngtree\u2014simple pixel game button element_5995881_6"
+      name: Game Over_6
       rect:
         serializedVersion: 2
-        x: 1638
-        y: 837
-        width: 217
-        height: 304
+        x: 41
+        y: 411
+        width: 67
+        height: 123
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0cc783f8275089810800000000000000
-      internalID: 1772172442957544640
+      spriteID: fc272fbe90f8014e0800000000000000
+      internalID: -2012951760658599217
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u2014Pngtree\u2014simple pixel game button element_5995881_7"
+      name: Game Over_7
       rect:
         serializedVersion: 2
-        x: 144
-        y: 579
-        width: 260
-        height: 239
+        x: 24
+        y: 203
+        width: 706
+        height: 444
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: dbda0a9d72b24f160800000000000000
-      internalID: 7058313966151314877
+      spriteID: 4a4858ff2c99fa680800000000000000
+      internalID: -8741599288913197916
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u2014Pngtree\u2014simple pixel game button element_5995881_8"
+      name: Game Over_8
       rect:
         serializedVersion: 2
-        x: 697
-        y: 578
-        width: 605
-        height: 239
+        x: 634
+        y: 490
+        width: 18
+        height: 27
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 12ea931ffe47daea0800000000000000
-      internalID: -5859898966246052319
+      spriteID: e426c5e3c523db2e0800000000000000
+      internalID: -2108473678774902194
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u2014Pngtree\u2014simple pixel game button element_5995881_9"
+      name: Game Over_9
       rect:
         serializedVersion: 2
-        x: 1638
-        y: 449
-        width: 217
-        height: 304
+        x: 137
+        y: 450
+        width: 6
+        height: 18
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1df5dc09fb3079950800000000000000
-      internalID: 6455632712161910737
+      spriteID: 62eb791cf96da3d90800000000000000
+      internalID: -7117140279469556186
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u2014Pngtree\u2014simple pixel game button element_5995881_10"
+      name: Game Over_10
       rect:
         serializedVersion: 2
-        x: 494
-        y: 190
-        width: 1015
-        height: 239
+        x: 90
+        y: 342
+        width: 64
+        height: 100
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3872bdc28869c7e70800000000000000
-      internalID: 9114325257503319939
+      spriteID: 3a5305529c05d97b0800000000000000
+      internalID: -5215923968580504157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Over_11
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 363
+        width: 6
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 003ca2455b65e8480800000000000000
+      internalID: -8895076877208993024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Over_12
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 229
+        width: 68
+        height: 127
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f56ab2b06677054a0800000000000000
+      internalID: -6606649373194738081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Game Over_13
+      rect:
+        serializedVersion: 2
+        x: 644
+        y: 225
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 531ff73a3828dca70800000000000000
+      internalID: 8848872344748290357
       vertices: []
       indices: 
       edges: []
@@ -388,7 +463,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 71a05cb883e33fa4cb4943b1181dea8e
     internalID: 0
     vertices: []
     indices: 
@@ -398,17 +473,20 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\u2014Pngtree\u2014simple pixel game button element_5995881_0": 2126654949759144205
-      "\u2014Pngtree\u2014simple pixel game button element_5995881_1": -8114665413238244439
-      "\u2014Pngtree\u2014simple pixel game button element_5995881_10": 9114325257503319939
-      "\u2014Pngtree\u2014simple pixel game button element_5995881_2": 7834803025558914932
-      "\u2014Pngtree\u2014simple pixel game button element_5995881_3": 2337025215378307827
-      "\u2014Pngtree\u2014simple pixel game button element_5995881_4": 3071537689281939538
-      "\u2014Pngtree\u2014simple pixel game button element_5995881_5": 4453465145718020644
-      "\u2014Pngtree\u2014simple pixel game button element_5995881_6": 1772172442957544640
-      "\u2014Pngtree\u2014simple pixel game button element_5995881_7": 7058313966151314877
-      "\u2014Pngtree\u2014simple pixel game button element_5995881_8": -5859898966246052319
-      "\u2014Pngtree\u2014simple pixel game button element_5995881_9": 6455632712161910737
+      Game Over_0: -8557816031639189491
+      Game Over_1: 4785595699045466773
+      Game Over_10: -5215923968580504157
+      Game Over_11: -8895076877208993024
+      Game Over_12: -6606649373194738081
+      Game Over_13: 8848872344748290357
+      Game Over_2: 9126758372691076483
+      Game Over_3: 4597229921433945903
+      Game Over_4: -6722920109146148863
+      Game Over_5: 8035775801353264071
+      Game Over_6: -2012951760658599217
+      Game Over_7: -8741599288913197916
+      Game Over_8: -2108473678774902194
+      Game Over_9: -7117140279469556186
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

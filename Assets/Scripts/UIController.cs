@@ -797,6 +797,7 @@ public class UIController : MonoBehaviour
     }
 
     /// <summary>Loads the next level in the level list.</summary>
+
     public void LoadNextLevel()
     {
         if (LevelManager.Instance == null) return; // kung walang LevelManager, wag mag-load
