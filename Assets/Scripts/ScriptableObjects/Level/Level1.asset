@@ -16,6 +16,7 @@ MonoBehaviour:
   wavesToWin: 3
   startingResources: 200
   startingLives: 10
+  backgroundMusic: {fileID: 8300000, guid: e4f3861a42b07e94c9d8c23d3c981acb, type: 3}
   tutorialSteps:
   - {fileID: 11400000, guid: b6bb28328d8eea642a2f814a8f60e986, type: 2}
   - {fileID: 11400000, guid: 671329921e7a2014db207ca0b8337672, type: 2}

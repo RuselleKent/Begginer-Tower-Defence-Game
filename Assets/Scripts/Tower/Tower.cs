@@ -97,32 +97,35 @@ public class Tower : MonoBehaviour
     }
 
     private void Shoot()
+{
+    if (_projectilePool == null || _enemiesInRange.Count == 0)
+        return;
+
+    CleanEnemiesInRange();
+
+    Enemy priorityTarget = GetPriorityTarget();
+    if (priorityTarget == null)
+        return;
+
+    GameObject projectile = _projectilePool.GetPooledObject();
+    if (projectile == null)
+        return;
+
+    Vector3 spawnPos = GetSpawnPosition();
+    projectile.transform.position = spawnPos;
+
+    Vector2 direction = (priorityTarget.transform.position - spawnPos).normalized;
+
+    Projectile proj = projectile.GetComponent<Projectile>();
+    if (proj != null)
     {
-        if (_projectilePool == null || _enemiesInRange.Count == 0) // kung walang pool o walang kalaban
-            return; // wag mag-shoot
-
-        CleanEnemiesInRange(); // linisin yung listahan (alisin yung mga patay na)
-
-        Enemy priorityTarget = GetPriorityTarget(); // kunin yung priority target (yung pinakamalayo)
-        if (priorityTarget == null) // kung walang target
-            return; // wag mag-shoot
-
-        GameObject projectile = _projectilePool.GetPooledObject(); // kumuha ng projectile sa pool
-        if (projectile == null) // kung walang nakuha (baka ubos na)
-            return; // wag mag-shoot
-
-        Vector3 spawnPos = GetSpawnPosition(); // kunin yung spawn position
-        projectile.transform.position = spawnPos; // i-position yung projectile sa spawn point
-
-        Vector2 direction = (priorityTarget.transform.position - spawnPos).normalized; // compute yung direksyon papuntang target (normalized para constant speed)
-
-        Projectile proj = projectile.GetComponent<Projectile>(); // kunin yung Projectile component
-        if (proj != null) // kung may projectile component
-        {
-            proj.Shoot(data, direction); // i-shoot yung projectile (i-set data at direksyon)
-            projectile.SetActive(true); // i-activate yung projectile (mag-fly na)
-        }
+        proj.Shoot(data, direction);
+        // Play the shoot sound for this tower type.
+        AudioManager.Instance?.PlayTowerShoot(data.displayName);
+        projectile.SetActive(true);
     }
+}
+
 
     /// <summary>Removes null or inactive enemies without a lambda allocation.</summary>
     private void CleanEnemiesInRange()

@@ -136,4 +136,4 @@ public class TutorialManager : MonoBehaviour
 
         OnTutorialComplete?.Invoke(); // i-trigger yung event na tapos na ang tutorial
     }
-}
+} 

@@ -8,6 +8,9 @@ public class LevelData : ScriptableObject
     public int startingResources;
     public int startingLives;
 
+    [Tooltip("Background music clip played during this level.")]
+    public AudioClip backgroundMusic;
+
     [Tooltip("Tutorial steps shown before the countdown. Leave empty for no tutorial.")]
     public TutorialStep[] tutorialSteps;
 }
