@@ -30,6 +30,7 @@ public class Spawner : MonoBehaviour
     private bool _isBetweenWaves; // flag kung nasa pagitan ng waves
     private bool _hasStarted; // flag kung nag-start na yung game
     private bool _bossWarningFired; // flag kung na-fire na yung boss warning (para isang beses lang)
+    private bool _missionComplete; // flag to ensure OnMissionComplete fires only once
     private int _lastTimerSecond = -1; // last second na na-broadcast (para hindi paulit-ulit mag-invoke)
 
     private void Awake()
@@ -156,11 +157,13 @@ public class Spawner : MonoBehaviour
 
             if (_waveCooldown <= 0f) // kung tapos na ang cooldown
             {
-                if (LevelManager.Instance != null &&
+                if (!_missionComplete &&
+                    LevelManager.Instance != null &&
                     LevelManager.Instance.CurrentLevel != null &&
                     _waveCounter + 1 >= LevelManager.Instance.CurrentLevel.wavesToWin) // kung last wave na
                 {
-                    OnMissionComplete?.Invoke(); // i-trigger yung mission complete event
+                    _missionComplete = true; // markahan para hindi na mag-fire ulit
+                    OnMissionComplete?.Invoke(); // i-trigger yung mission complete event (isang beses lang)
                     return; // tapos na
                 }
 

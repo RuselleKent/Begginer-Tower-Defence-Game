@@ -59,10 +59,10 @@ public class UIController : MonoBehaviour
     [SerializeField] private Button nextLevelButton;
     [SerializeField] private Button quitButton;
 
-    [SerializeField] private Color normalButtonColor = Color.white;
+    [SerializeField] private Color normalButtonColor  = Color.white;
     [SerializeField] private Color selectedButtonColor = Color.blue;
-    [SerializeField] private Color normalTextColor = Color.black;
-    [SerializeField] private Color selectedTextColor = Color.white;
+    [SerializeField] private Color normalTextColor    = Color.black;
+    [SerializeField] private Color selectedTextColor  = Color.white;
 
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject gameOverPanel;
@@ -72,7 +72,7 @@ public class UIController : MonoBehaviour
     [Header("Settings Buttons")]
     [SerializeField] private Button hudSettingsButton;
     [SerializeField] private Button pausePanelSettingsButton;
-    // Note: main menu settings button is wired via Inspector OnClick → OpenSettingsFromMainMenu()
+    // Note: main menu settings button is wired via Inspector OnClick → MainMenuController.OpenSettings()
     // because MainMenuCanvas is a scene object that gets recreated on each reload.
 
     private bool _isGamePaused;
@@ -82,10 +82,10 @@ public class UIController : MonoBehaviour
 
     public static bool IsCountdownActive { get; private set; }
 
-    private const float SlowSpeed = 0.5f;
-    private const float NormalSpeed = 1f;
-    private const float FastSpeed = 2f;
-    private const string ItchIoUrl = "https://play.unity.com/en/games/79da6443-ef6a-499c-9b56-681cc1022f9d/towerdefenders";
+    private const float SlowSpeed   = 0.5f;
+    private const float NormalSpeed  = 1f;
+    private const float FastSpeed    = 2f;
+    private const string ItchIoUrl  = "https://play.unity.com/en/games/79da6443-ef6a-499c-9b56-681cc1022f9d/towerdefenders";
 
     private Coroutine _bossWarningCoroutine;
     private Coroutine _warningCoroutine;
@@ -106,40 +106,40 @@ public class UIController : MonoBehaviour
 
     private void OnEnable()
     {
-        Spawner.OnWaveChanged += UpdateWaveText;
-        Spawner.OnCountdownTick += ShowCountdown;
-        Spawner.OnCountdownComplete += HideCountdown;
-        Spawner.OnMissionComplete += ShowMissionComplete;
-        Spawner.OnBossWarning += ShowBossWarning;
-        Spawner.OnNextWaveIn += ShowNextWaveTimer;
-        GameManager.OnLivesChanged += UpdateLivesText;
+        Spawner.OnWaveChanged        += UpdateWaveText;
+        Spawner.OnCountdownTick      += ShowCountdown;
+        Spawner.OnCountdownComplete  += HideCountdown;
+        Spawner.OnMissionComplete    += ShowMissionComplete;
+        Spawner.OnBossWarning        += ShowBossWarning;
+        Spawner.OnNextWaveIn         += ShowNextWaveTimer;
+        GameManager.OnLivesChanged   += UpdateLivesText;
         GameManager.OnResourcesChanged += UpdateResourcesText;
-        GameManager.OnResourcesEarned += SpawnFloatingText;
-        Platform.OnPlatformClicked += HandlePlatformClicked;
-        TowerCard.OnTowerSelected += HandleTowerSelected;
-        TowerManager.OnTowerClicked += HandleTowerClicked;
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        GameManager.OnResourcesEarned  += SpawnFloatingText;
+        Platform.OnPlatformClicked   += HandlePlatformClicked;
+        TowerCard.OnTowerSelected    += HandleTowerSelected;
+        TowerManager.OnTowerClicked  += HandleTowerClicked;
+        SceneManager.sceneLoaded     += OnSceneLoaded;
         TutorialManager.OnTutorialComplete += HandleTutorialComplete;
-        SettingsPanel.OnClosed += OnSettingsClosed;
+        SettingsPanel.OnClosed       += OnSettingsClosed;
     }
 
     private void OnDisable()
     {
-        Spawner.OnWaveChanged -= UpdateWaveText;
-        Spawner.OnCountdownTick -= ShowCountdown;
-        Spawner.OnCountdownComplete -= HideCountdown;
-        Spawner.OnMissionComplete -= ShowMissionComplete;
-        Spawner.OnBossWarning -= ShowBossWarning;
-        Spawner.OnNextWaveIn -= ShowNextWaveTimer;
-        GameManager.OnLivesChanged -= UpdateLivesText;
+        Spawner.OnWaveChanged        -= UpdateWaveText;
+        Spawner.OnCountdownTick      -= ShowCountdown;
+        Spawner.OnCountdownComplete  -= HideCountdown;
+        Spawner.OnMissionComplete    -= ShowMissionComplete;
+        Spawner.OnBossWarning        -= ShowBossWarning;
+        Spawner.OnNextWaveIn         -= ShowNextWaveTimer;
+        GameManager.OnLivesChanged   -= UpdateLivesText;
         GameManager.OnResourcesChanged -= UpdateResourcesText;
-        GameManager.OnResourcesEarned -= SpawnFloatingText;
-        Platform.OnPlatformClicked -= HandlePlatformClicked;
-        TowerCard.OnTowerSelected -= HandleTowerSelected;
-        TowerManager.OnTowerClicked -= HandleTowerClicked;
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        GameManager.OnResourcesEarned  -= SpawnFloatingText;
+        Platform.OnPlatformClicked   -= HandlePlatformClicked;
+        TowerCard.OnTowerSelected    -= HandleTowerSelected;
+        TowerManager.OnTowerClicked  -= HandleTowerClicked;
+        SceneManager.sceneLoaded     -= OnSceneLoaded;
         TutorialManager.OnTutorialComplete -= HandleTutorialComplete;
-        SettingsPanel.OnClosed -= OnSettingsClosed;
+        SettingsPanel.OnClosed       -= OnSettingsClosed;
     }
 
     private void Start()
@@ -204,28 +204,24 @@ public class UIController : MonoBehaviour
 
     // ─── Settings ─────────────────────────────────────────────────────────────
 
-    /// <summary>
-    /// Opens settings from the main menu. No pause logic needed — just show the panel.
-    /// Called via Inspector OnClick on MainMenuCanvas SettingsButton.
-    /// </summary>
+    /// <summary>Opens settings from the main menu. No pause logic — just show the panel.
+    /// Called via Inspector OnClick on MainMenuCanvas SettingsButton → MainMenuController.OpenSettings().</summary>
     public void OpenSettingsFromMainMenu()
     {
         AudioManager.Instance?.PlayButtonClick();
         SettingsPanel.Instance?.OpenPanel();
     }
 
-    /// <summary>
-    /// Opens settings during gameplay. Pauses the game if not already paused.
-    /// Silently blocked during countdown, tutorial, tower panels, game over, and mission complete.
-    /// </summary>
+    /// <summary>Opens settings during gameplay. Pauses if not already paused.
+    /// Silently blocked during countdown, tutorial, tower panels, game over, and mission complete.</summary>
     public void OpenSettings()
     {
         if (IsCountdownActive || TutorialManager.IsActive)
             return;
 
-        if ((towerPanel != null && towerPanel.activeSelf) ||
+        if ((towerPanel        != null && towerPanel.activeSelf)        ||
             (towerActionsPanel != null && towerActionsPanel.activeSelf) ||
-            (gameOverPanel != null && gameOverPanel.activeSelf) ||
+            (gameOverPanel     != null && gameOverPanel.activeSelf)     ||
             (missionCompletePanel != null && missionCompletePanel.activeSelf))
             return;
 
@@ -240,7 +236,6 @@ public class UIController : MonoBehaviour
                 GameManager.Instance.SetTimeScale(0f);
         }
 
-        // Hide the pause panel while settings is open.
         if (pausePanel != null)
             pausePanel.SetActive(false);
 
@@ -248,25 +243,23 @@ public class UIController : MonoBehaviour
         SettingsPanel.Instance?.OpenPanel();
     }
 
-    /// <summary>
-    /// Called when SettingsPanel fires its OnClosed event.
-    /// Resumes the game or restores the pause panel depending on how settings was opened.
-    /// </summary>
+    /// <summary>Called when SettingsPanel fires OnClosed (user closed the panel).
+    /// Resumes the game or restores the pause panel depending on how settings was opened.</summary>
     private void OnSettingsClosed()
     {
-        // If we're on the main menu, nothing to restore.
+        // On the main menu there is nothing game-side to restore.
         if (_isMainMenu)
             return;
 
         if (_settingsOpenedFromPause)
         {
-            // Opened from pause panel — bring it back and stay paused.
+            // Was opened from the pause panel — bring it back and stay paused.
             if (pausePanel != null)
                 pausePanel.SetActive(true);
         }
         else
         {
-            // Opened from the HUD — resume the game.
+            // Was opened from the HUD — resume the game.
             _isGamePaused = false;
 
             if (GameManager.Instance != null)
@@ -284,13 +277,25 @@ public class UIController : MonoBehaviour
         obj.transform.SetParent(transform);
 
         LineRenderer lr = obj.AddComponent<LineRenderer>();
-        lr.material = new Material(Shader.Find("Sprites/Default"));
-        lr.startColor = new Color(1f, 1f, 0f, 0.5f);
-        lr.endColor = new Color(1f, 1f, 0f, 0.5f);
-        lr.startWidth = 0.07f;
-        lr.endWidth = 0.07f;
+
+        // Shader.Find can return null in builds where the shader is stripped.
+        Shader spriteShader = Shader.Find("Sprites/Default");
+        if (spriteShader != null)
+        {
+            lr.material = new Material(spriteShader);
+        }
+        else
+        {
+            Debug.LogWarning("UIController: 'Sprites/Default' shader not found. Range indicator may render incorrectly.");
+            lr.material = new Material(Shader.Find("Hidden/Internal-Colored"));
+        }
+
+        lr.startColor       = new Color(1f, 1f, 0f, 0.5f);
+        lr.endColor         = new Color(1f, 1f, 0f, 0.5f);
+        lr.startWidth       = 0.07f;
+        lr.endWidth         = 0.07f;
         lr.sortingLayerName = "UI";
-        lr.sortingOrder = 50;
+        lr.sortingOrder     = 50;
 
         _rangeIndicator = obj.AddComponent<RangeIndicator>();
         obj.SetActive(false);
@@ -304,6 +309,9 @@ public class UIController : MonoBehaviour
             return;
 
         FloatingText ft = GetPooledFloatingText();
+        if (ft == null) // guard against misconfigured prefab
+            return;
+
         ft.transform.position = worldPosition;
         ft.Initialize($"+{amount}", Color.yellow);
         ft.gameObject.SetActive(true);
@@ -319,6 +327,14 @@ public class UIController : MonoBehaviour
 
         GameObject obj = Instantiate(floatingTextPrefab);
         FloatingText newFt = obj.GetComponent<FloatingText>();
+
+        if (newFt == null)
+        {
+            Debug.LogError("UIController: floatingTextPrefab is missing a FloatingText component!");
+            Destroy(obj);
+            return null;
+        }
+
         _floatingTextPool.Add(newFt);
         return newFt;
     }
@@ -328,12 +344,12 @@ public class UIController : MonoBehaviour
     private bool IsAnyPanelShowing()
     {
         return TutorialManager.IsActive ||
-               (pausePanel != null && pausePanel.activeSelf) ||
-               (gameOverPanel != null && gameOverPanel.activeSelf) ||
+               (pausePanel           != null && pausePanel.activeSelf)           ||
+               (gameOverPanel        != null && gameOverPanel.activeSelf)        ||
                (missionCompletePanel != null && missionCompletePanel.activeSelf) ||
-               (towerPanel != null && towerPanel.activeSelf) ||
-               (towerActionsPanel != null && towerActionsPanel.activeSelf) ||
-               (bossWarningPanel != null && bossWarningPanel.activeSelf) ||
+               (towerPanel           != null && towerPanel.activeSelf)           ||
+               (towerActionsPanel    != null && towerActionsPanel.activeSelf)    ||
+               (bossWarningPanel     != null && bossWarningPanel.activeSelf)     ||
                (SettingsPanel.Instance != null && SettingsPanel.Instance.IsOpen);
     }
 
@@ -438,7 +454,7 @@ public class UIController : MonoBehaviour
             return;
 
         _currentPlatform = platform;
-        _selectedTower = null;
+        _selectedTower   = null;
         ShowTowerPanel();
     }
 
@@ -447,7 +463,7 @@ public class UIController : MonoBehaviour
         if (IsCountdownActive || TutorialManager.IsActive)
             return;
 
-        _selectedTower = tower;
+        _selectedTower   = tower;
         _currentPlatform = tower.Platform;
         ShowTowerActionsPanel();
     }
@@ -592,8 +608,8 @@ public class UIController : MonoBehaviour
             string displayName = !string.IsNullOrEmpty(d.displayName) ? d.displayName : d.name;
             float fireRate = d.shootInterval > 0f ? 1f / d.shootInterval : 0f;
             towerInfoText.text = $"<b>{displayName}</b>\n" +
-                                 $"DMG: {d.damage}\n" +
-                                 $"RNG: {d.range}\n" +
+                                 $"DMG: {d.damage}\n"      +
+                                 $"RNG: {d.range}\n"       +
                                  $"SPD: {fireRate:F1}/s";
         }
 
@@ -616,7 +632,7 @@ public class UIController : MonoBehaviour
         if (GameManager.Instance != null)
             GameManager.Instance.SetTimeScale(GameManager.Instance.GameSpeed);
 
-        _selectedTower = null;
+        _selectedTower   = null;
         _currentPlatform = null;
     }
 
@@ -679,23 +695,21 @@ public class UIController : MonoBehaviour
 
     // ─── Pause ────────────────────────────────────────────────────────────────
 
-    /// <summary>
-    /// Toggles the pause state. If settings is open, closes it instead of toggling.
-    /// Silently blocked during countdown, tutorial, and open tower panels.
-    /// </summary>
+    /// <summary>Toggles the pause state. If settings is open, closes it instead of toggling.
+    /// Silently blocked during countdown, tutorial, and open tower panels.</summary>
     public void TogglePause()
     {
         if (IsCountdownActive || TutorialManager.IsActive)
             return;
 
-        if ((towerPanel != null && towerPanel.activeSelf) ||
+        if ((towerPanel        != null && towerPanel.activeSelf) ||
             (towerActionsPanel != null && towerActionsPanel.activeSelf))
             return;
 
         // If settings is open, close it — OnSettingsClosed restores the correct state.
         if (SettingsPanel.Instance != null && SettingsPanel.Instance.IsOpen)
         {
-            SettingsPanel.Instance.ClosePanel();
+            SettingsPanel.Instance.ClosePanelByUser();
             return;
         }
 
@@ -741,13 +755,17 @@ public class UIController : MonoBehaviour
 #endif
     }
 
-    /// <summary>Returns to the main menu and resets time scale.</summary>
+    /// <summary>Returns to the main menu. Uses LevelManager.LoadMainMenu() to clear
+    /// CurrentLevel before loading so GameManager does not reset game state on arrival.</summary>
     public void GoToMainMenu()
     {
         if (GameManager.Instance != null)
             GameManager.Instance.SetTimeScale(1f);
 
-        SceneManager.LoadScene(GameConstants.SCENE_MAIN_MENU);
+        if (LevelManager.Instance != null)
+            LevelManager.Instance.LoadMainMenu();
+        else
+            SceneManager.LoadScene(GameConstants.SCENE_MAIN_MENU);
     }
 
     private void ShowGameOver()
@@ -839,47 +857,48 @@ public class UIController : MonoBehaviour
 
     private void HideUI()
     {
-        if (waveText != null) waveText.gameObject.SetActive(false);
-        if (livesText != null) livesText.gameObject.SetActive(false);
-        if (resourcesText != null) resourcesText.gameObject.SetActive(false);
-        if (warningText != null) warningText.gameObject.SetActive(false);
-        if (waveTimerText != null) waveTimerText.gameObject.SetActive(false);
-        if (speed1Button != null) speed1Button.gameObject.SetActive(false);
-        if (speed2Button != null) speed2Button.gameObject.SetActive(false);
-        if (speed3Button != null) speed3Button.gameObject.SetActive(false);
-        if (pauseButton != null) pauseButton.gameObject.SetActive(false);
+        if (waveText        != null) waveText.gameObject.SetActive(false);
+        if (livesText       != null) livesText.gameObject.SetActive(false);
+        if (resourcesText   != null) resourcesText.gameObject.SetActive(false);
+        if (warningText     != null) warningText.gameObject.SetActive(false);
+        if (waveTimerText   != null) waveTimerText.gameObject.SetActive(false);
+        if (speed1Button    != null) speed1Button.gameObject.SetActive(false);
+        if (speed2Button    != null) speed2Button.gameObject.SetActive(false);
+        if (speed3Button    != null) speed3Button.gameObject.SetActive(false);
+        if (pauseButton     != null) pauseButton.gameObject.SetActive(false);
         if (hudSettingsButton != null) hudSettingsButton.gameObject.SetActive(false);
-        if (objectiveText != null) objectiveText.gameObject.SetActive(false);
+        if (objectiveText   != null) objectiveText.gameObject.SetActive(false);
     }
 
     private void ShowUI()
     {
-        if (waveText != null) waveText.gameObject.SetActive(true);
-        if (livesText != null) livesText.gameObject.SetActive(true);
-        if (resourcesText != null) resourcesText.gameObject.SetActive(true);
-        if (speed1Button != null) speed1Button.gameObject.SetActive(true);
-        if (speed2Button != null) speed2Button.gameObject.SetActive(true);
-        if (speed3Button != null) speed3Button.gameObject.SetActive(true);
-        if (pauseButton != null) pauseButton.gameObject.SetActive(true);
+        if (waveText        != null) waveText.gameObject.SetActive(true);
+        if (livesText       != null) livesText.gameObject.SetActive(true);
+        if (resourcesText   != null) resourcesText.gameObject.SetActive(true);
+        if (speed1Button    != null) speed1Button.gameObject.SetActive(true);
+        if (speed2Button    != null) speed2Button.gameObject.SetActive(true);
+        if (speed3Button    != null) speed3Button.gameObject.SetActive(true);
+        if (pauseButton     != null) pauseButton.gameObject.SetActive(true);
         if (hudSettingsButton != null) hudSettingsButton.gameObject.SetActive(true);
     }
 
     private void HidePanels()
     {
-        if (pausePanel != null) pausePanel.SetActive(false);
-        if (gameOverPanel != null) gameOverPanel.SetActive(false);
+        if (pausePanel           != null) pausePanel.SetActive(false);
+        if (gameOverPanel        != null) gameOverPanel.SetActive(false);
         if (missionCompletePanel != null) missionCompletePanel.SetActive(false);
-        if (towerActionsPanel != null) towerActionsPanel.SetActive(false);
-        if (countdownPanel != null) countdownPanel.SetActive(false);
-        if (bossWarningPanel != null) bossWarningPanel.SetActive(false);
+        if (towerActionsPanel    != null) towerActionsPanel.SetActive(false);
+        if (countdownPanel       != null) countdownPanel.SetActive(false);
+        if (bossWarningPanel     != null) bossWarningPanel.SetActive(false);
 
         // Reset all flags BEFORE ClosePanel() so OnSettingsClosed()
-        // doesn't restore the pause panel after everything has been hidden.
-        IsCountdownActive = false;
-        _isGamePaused = false;
-        _isGameOver = false;
+        // does not try to restore any panels after everything is hidden.
+        IsCountdownActive        = false;
+        _isGamePaused            = false;
+        _isGameOver              = false;
         _settingsOpenedFromPause = false;
 
+        // Silent close — no sound, no OnClosed event fired.
         SettingsPanel.Instance?.ClosePanel();
 
         HideNextWaveTimer();

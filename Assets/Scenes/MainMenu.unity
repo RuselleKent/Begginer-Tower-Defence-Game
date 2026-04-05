@@ -3202,9 +3202,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 852133343}
-        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: OpenSettingsFromMainMenu
+      - m_Target: {fileID: 641922685}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: OpenSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3269,7 +3269,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 360, y: -125}
+  m_AnchoredPosition: {x: 410, y: -126}
   m_SizeDelta: {x: 52, y: 49}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &517146667
@@ -9388,9 +9388,9 @@ MonoBehaviour:
   mainMenuMusic: {fileID: 8300000, guid: ac20db633d9d35d4695bd25e71ef80fd, type: 3}
   buttonClickClip: {fileID: 8300000, guid: c339bb598f3869f4cac2b7b89f091ac4, type: 3}
   gameOverClip: {fileID: 8300000, guid: e93480353779e2e4ab5cff686e3d8254, type: 3}
-  youWinClip: {fileID: 0}
-  burstTowerClip: {fileID: 0}
-  fastTowerClip: {fileID: 8300000, guid: fefb058528682c34381385ac24df8bbf, type: 3}
+  youWinClip: {fileID: 8300000, guid: 42aa73b1f4d3cc54aab80116f7530a6d, type: 3}
+  burstTowerClip: {fileID: 8300000, guid: 0d8b87d8d2eba0248ac517e59c787692, type: 3}
+  fastTowerClip: {fileID: 8300000, guid: da80d3bc087d4c244accd95597830010, type: 3}
   strongTowerClip: {fileID: 8300000, guid: 3cb78cdf5228fd94d93d260a48f2c482, type: 3}
 --- !u!82 &1460944055
 AudioSource:

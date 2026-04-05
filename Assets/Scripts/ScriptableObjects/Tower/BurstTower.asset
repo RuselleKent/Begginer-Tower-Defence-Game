@@ -18,7 +18,7 @@ MonoBehaviour:
   projectileSpeed: 8
   projectileDuration: 0.5
   projectileSize: 0.3
-  damage: 0.1
+  damage: 0.3
   cost: 75
   refundValue: 30
   sprite: {fileID: -6287494417814773176, guid: b92a351d7601cd841970b9c3774bad60, type: 3}

@@ -7,7 +7,7 @@ public class SettingsPanel : MonoBehaviour
 {
     public static SettingsPanel Instance { get; private set; }
 
-    /// <summary>Fired when the settings panel is closed.</summary>
+    /// <summary>Fired only when the user explicitly closes the panel via the close button.</summary>
     public static event Action OnClosed;
 
     [Header("Panel")]
@@ -27,9 +27,9 @@ public class SettingsPanel : MonoBehaviour
     [SerializeField] private Button closeButton;
 
     private float _lastMusicVolume = 1f;
-    private float _lastSfxVolume = 1f;
-    private bool _musicMuted;
-    private bool _sfxMuted;
+    private float _lastSfxVolume   = 1f;
+    private bool  _musicMuted;
+    private bool  _sfxMuted;
 
     private void Awake()
     {
@@ -53,10 +53,10 @@ public class SettingsPanel : MonoBehaviour
         if (sfxMuteButton != null)
             sfxMuteButton.onClick.AddListener(ToggleSfxMute);
         if (closeButton != null)
-            closeButton.onClick.AddListener(ClosePanel);
+            closeButton.onClick.AddListener(ClosePanelByUser); // user-initiated only
     }
 
-    /// <summary>Opens the settings panel and syncs sliders to current volume.</summary>
+    /// <summary>Opens the settings panel and syncs sliders to current AudioManager values.</summary>
     public void OpenPanel()
     {
         if (AudioManager.Instance != null)
@@ -71,18 +71,24 @@ public class SettingsPanel : MonoBehaviour
             panel.SetActive(true);
     }
 
-    /// <summary>Closes the settings panel and notifies listeners.</summary>
+    /// <summary>Hides the panel silently. Called by HidePanels() on scene transitions —
+    /// does NOT play a sound and does NOT fire OnClosed.</summary>
     public void ClosePanel()
     {
-        AudioManager.Instance?.PlayButtonClick();
-
         if (panel != null)
             panel.SetActive(false);
+    }
 
+    /// <summary>Hides the panel, plays the button sound, and fires OnClosed.
+    /// Only called when the user taps the close button.</summary>
+    public void ClosePanelByUser()
+    {
+        AudioManager.Instance?.PlayButtonClick();
+        ClosePanel();
         OnClosed?.Invoke();
     }
 
-    /// <summary>Returns true if the settings panel is currently visible.</summary>
+    /// <summary>Returns true when the settings panel is visible.</summary>
     public bool IsOpen => panel != null && panel.activeSelf;
 
     private void OnMusicSliderChanged(float value)
@@ -103,6 +109,7 @@ public class SettingsPanel : MonoBehaviour
     {
         AudioManager.Instance?.PlayButtonClick();
         _musicMuted = !_musicMuted;
+
         if (_musicMuted)
         {
             _lastMusicVolume = AudioManager.Instance?.MusicVolume ?? 1f;
@@ -115,6 +122,7 @@ public class SettingsPanel : MonoBehaviour
             AudioManager.Instance?.SetMusicVolume(restore);
             if (musicSlider != null) musicSlider.value = restore;
         }
+
         UpdateMuteLabel(musicMuteLabel, _musicMuted);
     }
 
@@ -122,6 +130,7 @@ public class SettingsPanel : MonoBehaviour
     {
         AudioManager.Instance?.PlayButtonClick();
         _sfxMuted = !_sfxMuted;
+
         if (_sfxMuted)
         {
             _lastSfxVolume = AudioManager.Instance?.SfxVolume ?? 1f;
@@ -134,6 +143,7 @@ public class SettingsPanel : MonoBehaviour
             AudioManager.Instance?.SetSfxVolume(restore);
             if (sfxSlider != null) sfxSlider.value = restore;
         }
+
         UpdateMuteLabel(sfxMuteLabel, _sfxMuted);
     }
 

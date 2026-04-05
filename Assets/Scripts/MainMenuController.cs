@@ -21,7 +21,7 @@ public class MainMenuController : MonoBehaviour
         if (mainButtonGroup != null) mainButtonGroup.SetActive(true);
     }
 
-    /// <summary>Opens the settings panel.</summary>
+    /// <summary>Opens the settings panel via singleton — safe across scene reloads.</summary>
     public void OpenSettings()
     {
         AudioManager.Instance?.PlayButtonClick();
